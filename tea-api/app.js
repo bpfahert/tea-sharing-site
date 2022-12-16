@@ -5,11 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIRouter = require('./routes/testAPI');
 
-var app = express();
+const app = express();
+const mongoose = require('mongoose');
+const mongoDB = "mongodb+srv://admin:vPHzWtj3LP1CK2u6@tea-cluster.t1mwtol.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, { useNewURLParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
