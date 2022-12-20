@@ -7,7 +7,7 @@ import './App.css';
 function App() {
   const [apiResponse, setApiResponse] = React.useState("");
   
-  //API not sending?
+
   function callApi() {
     fetch("http://localhost:9000/testapi")
       .then(res => res.text())

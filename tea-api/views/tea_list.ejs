@@ -6,21 +6,21 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Tea sharing site!</p>
     <div class="navbar">
       <a href="/">Home</a>
       <a href="/teas">Teas</a>
       <a href="">Friends</a>
       <a href="/user">Profile</a>
     </div>
-    <div>
-      User info:
+    <div class="tealistdiv">
+        <ul>
+            <% for(const tea in tea_list) { %>
+                <li> <%= tea.tea_name %> </li>
+            <% } %>
+        
+
+        </ul>
     </div>
-    <div>
-      Recently added tea:
-    </div>
-    <div>
-      Top teas:
-    </div>
+    <p>Tea list success!</p>
   </body>
 </html>
