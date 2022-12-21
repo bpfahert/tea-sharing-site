@@ -13,7 +13,7 @@ const TeaSchema = new Schema({
 });
 
 TeaSchema.virtual("url").get(function () {
-    return `/tea/${this.id}`;
+    return `/teas/${this.id}`;
 });
 
 module.exports = mongoose.model("Tea", TeaSchema);

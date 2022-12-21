@@ -2,22 +2,21 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='../style.css' />
   </head>
   <body>
     <h1><%= title %></h1>
     <div class="navbar">
       <a href="/">Home</a>
-      <a href="/teas">Teas</a>
+      <a href="/teas/tealist">Teas</a>
       <a href="">Friends</a>
       <a href="/user">Profile</a>
     </div>
     <div class="tealistdiv">
         <ul>
-            <% for(const tea in tea_list) { %>
-                <li> <%= tea.tea_name %> </li>
+            <% for(let i = 0; i < tea_list.length; i ++) { %>
+                <li> <a href='<%= tea_list[i].url %>'> <%= tea_list[i].tea_name %> </a> Brand: <%= tea_list[i].brand %> Rating(out of 5) <%= tea_list[i].rating %> Notes: <%= tea_list[i].notes %></li>
             <% } %>
-        
 
         </ul>
     </div>

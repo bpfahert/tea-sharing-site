@@ -42,7 +42,7 @@ exports.tea_create_get = (req, res, next) => {
 
 exports.tea_create_post = [
   body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
-  body("type").trim(),
+  body("type"),
   body("brand").trim().isLength({min: 1}).escape(),
   body("rating"),
   body("notes").trim().escape(),
@@ -57,10 +57,11 @@ exports.tea_create_post = [
       notes: req.body.notes,
     });
 
+    //needs to be async?
     tea.save((err) => {
       if(err) {
         return next(err);
-      };
+      }
       res.redirect(tea.url);
     })
   }

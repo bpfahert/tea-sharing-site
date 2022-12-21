@@ -1,0 +1,11 @@
+
+.navbar {
+    border: solid 2px black;
+}
+
+.tealistdiv {
+    display: flex;
+    flex-direction: column;
+    border: solid 2px black;
+    margin: 5px;
+}
