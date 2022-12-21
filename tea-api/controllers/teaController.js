@@ -1,5 +1,6 @@
 const Tea = require("../models/tea");
 const { body, validationResult} = require("express-validator");
+const async = require("async");
 
 
 exports.index = (req, res) => {
@@ -7,14 +8,22 @@ exports.index = (req, res) => {
 };
 
 exports.tea_list = (req, res, next) => {
-  Tea.find({}, "tea_name type brand rating")
-  .sort({tea_name: 1})
-  .exec(function (err, list_teas) {
-    if (err) {
-      return next(err);
-    }
-    res.render("tea_list", {title: "Tea List", tea_list: list_teas});
-  });
+  async.parallel(
+    {
+      list_teas(callback) {
+        Tea.find({}, "tea_name brand rating notes").sort({tea_name: 1}).exec(callback);
+      },
+
+      recently_added_teas(callback) {
+        Tea.find({}, "created_on tea_name brand rating notes").sort({created_on: -1}).limit(5).exec(callback);
+      },
+    },
+      (err, results) => {
+        if (err) {
+          return next(err);
+        }
+        res.render("tea_list", {title: "Tea List", tea_list: results.list_teas, new_tea_list: results.recently_added_teas});
+      });
 };
 
 exports.tea_info = (req, res, next) => {
@@ -40,6 +49,7 @@ exports.tea_create_get = (req, res, next) => {
   res.render("tea_form", {title: "Add New Tea"});  
   };
 
+  //Fix so tea type is added (select option not working?)
 exports.tea_create_post = [
   body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
   body("type"),
@@ -55,6 +65,7 @@ exports.tea_create_post = [
       brand: req.body.brand,
       rating: req.body.rating,
       notes: req.body.notes,
+      created_on: new Date(),
     });
 
     //needs to be async?

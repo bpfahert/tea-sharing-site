@@ -14,12 +14,10 @@
     </div>
     <div class="userlistdiv">
         <ul>
-            <% for(const user in user_list) { %>
-                <li> <%= user.username %> </li>
+            <% for(let i = 0; i < user_list.length; i++) { %>
+                <li> <a href='<%= user_list[i].url %>'> <%= user_list[i].username %></li>
             <% } %>
-        
         </ul>
     </div>
-    <p>User list success!</p>
   </body>
 </html>

@@ -12,7 +12,16 @@
       <a href="">Friends</a>
       <a href="/user">Profile</a>
     </div>
+    <div class="newtealist">
+      <h2>Recently Added Teas</h2>
+      <ul>
+        <% for(let i = 0; i < new_tea_list.length; i++) { %>
+            <li> <a href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a> Brand: <%= tea_list[i].brand %> Rating(out of 5) <%= tea_list[i].rating %> Notes: <%= tea_list[i].notes %> Added on: <%= new_tea_list[i].created_on %></li>
+        <% } %>
+    </ul>
+</div>
     <div class="tealistdiv">
+      <h2> All Teas</h2>
         <ul>
             <% for(let i = 0; i < tea_list.length; i ++) { %>
                 <li> <a href='<%= tea_list[i].url %>'> <%= tea_list[i].tea_name %> </a> Brand: <%= tea_list[i].brand %> Rating(out of 5) <%= tea_list[i].rating %> Notes: <%= tea_list[i].notes %></li>
