@@ -9,9 +9,19 @@
     <div class="navbar">
       <a href="/">Home</a>
       <a href="/teas/tealist">Teas</a>
-      <a href="">Friends</a>
-      <a href="/user">Profile</a>
+      <% if (currentUser) { %>
+        <a href="<%= currentUser.url %>">Profile</a>
+      <% } else { %>
+        <a href="/user/login">Log in</a>
+      <% } %>
+      <a href="/user/userlist">Friends</a>
     </div>
+    <% if (currentUser) { %>
+      <h3>Hello <%= currentUser.username %></h3>
+      <a href="/logout">Log out</a>
+    <% } else { %>
+      <h1>Log in to your account!</h1>
+    <% } %>
     <div class="userlistdiv">
         <ul>
             <% for(let i = 0; i < user_list.length; i++) { %>

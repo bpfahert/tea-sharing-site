@@ -16,7 +16,7 @@
       <h2>Recently Added Teas</h2>
       <ul>
         <% for(let i = 0; i < new_tea_list.length; i++) { %>
-            <li> <a href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a> Brand: <%= tea_list[i].brand %> Rating(out of 5) <%= tea_list[i].rating %> Notes: <%= tea_list[i].notes %> Added on: <%= new_tea_list[i].created_on %></li>
+            <li> <a href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a> Type: <%= new_tea_list[i].type %> Brand: <%= new_tea_list[i].brand %> Rating(out of 10) <%= new_tea_list[i].rating %> Notes: <%= new_tea_list[i].notes %> Added on: <%= new_tea_list[i].created_on %></li>
         <% } %>
     </ul>
 </div>
@@ -24,11 +24,10 @@
       <h2> All Teas</h2>
         <ul>
             <% for(let i = 0; i < tea_list.length; i ++) { %>
-                <li> <a href='<%= tea_list[i].url %>'> <%= tea_list[i].tea_name %> </a> Brand: <%= tea_list[i].brand %> Rating(out of 5) <%= tea_list[i].rating %> Notes: <%= tea_list[i].notes %></li>
+                <li> <a href='<%= tea_list[i].url %>'> <%= tea_list[i].tea_name %> </a> Type: <%= tea_list[i].type %> Brand: <%= tea_list[i].brand %> Rating(out of 10) <%= tea_list[i].rating %> Notes: <%= tea_list[i].notes %></li>
             <% } %>
 
         </ul>
     </div>
-    <p>Tea list success!</p>
   </body>
 </html>

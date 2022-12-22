@@ -11,11 +11,11 @@ exports.tea_list = (req, res, next) => {
   async.parallel(
     {
       list_teas(callback) {
-        Tea.find({}, "tea_name brand rating notes").sort({tea_name: 1}).exec(callback);
+        Tea.find({}, "tea_name type brand rating notes").sort({tea_name: 1}).exec(callback);
       },
 
       recently_added_teas(callback) {
-        Tea.find({}, "created_on tea_name brand rating notes").sort({created_on: -1}).limit(5).exec(callback);
+        Tea.find({}, "created_on tea_name type brand rating notes").sort({created_on: -1}).limit(5).exec(callback);
       },
     },
       (err, results) => {

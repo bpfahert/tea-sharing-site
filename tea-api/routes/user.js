@@ -7,6 +7,8 @@ router.get('/create', user_controller.user_create_get);
 
 router.post('/create', user_controller.user_create_post);
 
+router.get('/login', user_controller.user_login_get);
+
 router.get('/:id/delete', user_controller.user_delete_get);
 
 router.post('/:id/delete', user_controller.user_delete_post);
