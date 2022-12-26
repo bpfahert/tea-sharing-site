@@ -85,7 +85,7 @@ app.post(
   "/userlogin",
   passport.authenticate("local", {
     successRedirect: "/teas/tealist",
-    failureRedirect: "/users/userlist"
+    failureRedirect: "/user/userlist"
   })
   );
 

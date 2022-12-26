@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const user = require("./user");
 
 const TeaSchema = new Schema({
     tea_name: {type: String, required: [true, "Please enter a tea name"], minLength: 2, maxLength: 20},

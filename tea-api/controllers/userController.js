@@ -39,14 +39,14 @@ exports.user_create_get = (req, res, next) => {
 exports.user_create_post = [
   body("username", "Please enter a username").trim().isLength({min: 2}).escape(),
   body("password").trim().isLength({min: 2}).escape(),
-  body("favorite_tea"),
+  body("favoritetea"),
   (req, res, next) => {
     const errors = validationResult(req);
 
     const user = new User({
       username: req.body.username,
       password: req.body.password,
-      favorite_tea: req.body.favorite_tea,
+      favorite_tea_type: req.body.favoritetea,
     });
 
     bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {

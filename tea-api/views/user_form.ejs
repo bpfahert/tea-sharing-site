@@ -17,23 +17,27 @@
       <% } %>
       <a href="/user/userlist">Friends</a>
     </div>
-    <div class="formdiv">
-        <form method="POST" action="" className="userform" id="newuserform">
-            <h2>New user signup</h2>
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Username"></input>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"></input>
-            <label htmlFor="favoritetea">Favorite Type of Tea</label>
-            <select id="favoritetea" name="favoritetea">
-              <option value="Green">Green</option>
-              <option value="Black">Black</option>
-              <option value="Oolong">Oolong</option>
-              <option value="Herbal">Herbal</option>
-              <option value="White">White</option>
-            </select>
-            <button type="submit">Submit</button>
-          </form>
-    </div>
+    <% if (currentUser) { %>
+      <h3>You are already logged in <%= currentUser.username %></h3>
+    <% } else { %>
+      <div class="formdiv">
+          <form method="POST" action="" className="userform" id="newuserform">
+              <h2>New user signup</h2>
+              <label htmlFor="username">Username</label>
+              <input type="text" id="username" name="username" placeholder="Username"></input>
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password"></input>
+              <label htmlFor="favoritetea">Favorite Type of Tea</label>
+              <select id="favoritetea" name="favoritetea">
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="Oolong">Oolong</option>
+                <option value="Herbal">Herbal</option>
+                <option value="White">White</option>
+              </select>
+              <button type="submit">Submit</button>
+            </form>
+      </div>
+    <% } %>
   </body>
 </html>

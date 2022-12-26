@@ -1,6 +1,8 @@
 const Tea = require("../models/tea");
 const { body, validationResult} = require("express-validator");
 const async = require("async");
+const User = require("../models/user");
+const mongoose = require("mongoose");
 
 
 exports.index = (req, res) => {
@@ -27,8 +29,10 @@ exports.tea_list = (req, res, next) => {
 };
 
 exports.tea_info = (req, res, next) => {
+
   Tea.findById(req.params.id)
   .populate("tea_name")
+  .populate("created_by")
   .exec((err, tea) => {
     if (err) {
       return next(err)
@@ -40,7 +44,9 @@ exports.tea_info = (req, res, next) => {
     }
     res.render("tea_info", {
       title: `${tea.tea_name}`,
-      tea
+      tea,
+      added_by: tea.created_by.username,
+      user_url : tea.created_by.url,
     })
   })
 };
@@ -49,7 +55,7 @@ exports.tea_create_get = (req, res, next) => {
   res.render("tea_form", {title: "Add New Tea"});  
   };
 
-  //Fix so tea type is added (select option not working?)
+
 exports.tea_create_post = [
   body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
   body("type"),
@@ -66,6 +72,7 @@ exports.tea_create_post = [
       rating: req.body.rating,
       notes: req.body.notes,
       created_on: new Date(),
+      created_by: req.user._id,
     });
 
     //needs to be async?
