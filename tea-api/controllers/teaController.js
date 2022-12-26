@@ -75,6 +75,24 @@ exports.tea_create_post = [
       created_by: req.user._id,
     });
 
+    User.findById(tea.created_by)
+    .exec((err, creator) => {
+      if (err) {
+        return next(err);
+      }
+      if (creator === null) {
+        const err = new Error ("User does not exist!");
+        err.status = 404;
+        return next(err);
+      }
+      creator.teas_added.push(tea);
+      creator.save((err) => {
+        if(err) {
+          return next(err);
+        }
+      })
+    })
+
     //needs to be async?
     tea.save((err) => {
       if(err) {

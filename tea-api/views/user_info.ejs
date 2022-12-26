@@ -19,6 +19,19 @@
     <div class="userinfodiv">
         <p>Username: <%= user.username %></p>
         <p>Favorite Tea: <%= user.favorite_tea_type %></p>
+        <div class="useraddedteas">
+          <h3>Teas Added:</h3> 
+          <ul>
+            <% for(let i = 0; i < user.teas_added.length; i++) { %>
+                <li> <a href='/teas/<%= user.teas_added[i]._id %>'> <%= user.teas_added[i].tea_name %> </a> 
+                  Type: <%= user.teas_added[i].type %> 
+                  Brand: <%= user.teas_added[i].brand %> 
+                  Rating(out of 10) <%= user.teas_added[i].rating %> 
+                  Notes: <%= user.teas_added[i].notes %> 
+                  Added on: <%= user.teas_added[i].created_on %></li>
+            <% } %>
+          </ul>
+        </div>
     </div>
   </body>
 </html>

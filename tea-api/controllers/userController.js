@@ -27,7 +27,7 @@ exports.user_info = (req, res, next) => {
     }
     res.render("user_info", {
       title: `${user.username}`,
-      user
+      user,
     })
   })
 };

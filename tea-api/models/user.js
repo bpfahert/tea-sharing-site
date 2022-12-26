@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     favorite_tea_type: {type: String},
     account_created: {type: Date},
     favorite_teas: {type: Array},
-    uploaded_teas: {type: Array},
+    teas_added: {type: Array},
     email: {type: String},
 });
 
