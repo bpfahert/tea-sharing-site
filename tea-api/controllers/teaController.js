@@ -28,6 +28,7 @@ exports.tea_list = (req, res, next) => {
       });
 };
 
+//TODO: Fix bug where username is undefined (added by:)
 exports.tea_info = (req, res, next) => {
 
   Tea.findById(req.params.id)
@@ -103,12 +104,27 @@ exports.tea_create_post = [
   }
 ];
   
-  exports.tea_delete_get = (req, res) => {
-    res.send(" a");
+  exports.tea_delete_get = (req, res, next) => {
+    Tea.findById(req.params.id).exec((err, tea) => {
+      if(err) {
+        return next(err);
+      }
+      if (tea === null) {
+        const err = new Error ("Tea does not exist or has already been deleted!");
+        err.status = 404;
+        return next(err);
+      }
+      res.render("tea_delete", {title: "Delete this tea", tea}) 
+    })
   };
   
-  exports.tea_delete_post = (req, res) => {
-    res.send("a ");
+  exports.tea_delete_post = (req, res, next) => {
+    Tea.findByIdAndRemove(req.body.teadeleteid, (err) => {
+      if(err) {
+        return next(err);
+      }
+      res.redirect("/teas");
+    })
   };
   
   exports.tea_update_get = (req, res) => {
