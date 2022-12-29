@@ -1,8 +1,22 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+li {
+    list-style: none;
 }
 
-a {
-  color: #00B7FF;
+.navbar {
+    border: solid 2px black;
+}
+
+.tealistdiv {
+    display: flex;
+    flex-direction: column;
+    border: solid 2px black;
+    margin: 5px;
+}
+
+.teacard {
+    display: flex;
+    flex-direction: column;
+    border: solid 3px blue;
+    margin: 10px;
+    width: 600px;
 }
