@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
+const multer = require('multer');
+const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -27,6 +28,20 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+//added
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+const upload = multer({ storage: storage });
 
 passport.use(
   new LocalStrategy((username, password, done) => {

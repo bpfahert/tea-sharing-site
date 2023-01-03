@@ -12,6 +12,7 @@ const TeaSchema = new Schema({
     created_by: {type: Schema.Types.ObjectId, ref: "User"},
     created_on: {type: Date},
     updated_on: {type: Date},
+    img: {data: Buffer, contentType: String},
 });
 
 TeaSchema.virtual("url").get(function () {

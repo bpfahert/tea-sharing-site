@@ -1,7 +1,13 @@
 const Tea = require("../models/tea");
 const { body, validationResult} = require("express-validator");
 const async = require("async");
+const path = require('path');
+const fs = require('fs');
 const User = require("../models/user");
+const multer = require('multer');
+
+//UPLOAD IS PLACING IMG IN PROJECT PUBLIC IMAGE FOLDER AND IN UPLOADS FOLDER{TEMPORARILY?}, NEED TO GET IT IN API FOLDER/UPLOADS
+const upload = multer({dest: './public/images/'});
 const mongoose = require("mongoose");
 
 
@@ -58,12 +64,20 @@ exports.tea_create_get = (req, res, next) => {
 
 
 exports.tea_create_post = [
+  upload.single('teaimg'),
   body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
   body("type"),
   body("brand").trim().isLength({min: 1}).escape(),
   body("rating"),
   body("notes").trim().escape(),
   (req, res, next) => {
+    const uploadedImage = {
+      teaImage: {
+        data: fs.readFileSync(path.join(__dirname + "/../public/images/" + req.file.filename)),
+      contentType: "image/png"
+      }
+    }
+
     const errors = validationResult(req);
 
     const tea = new Tea({
@@ -74,6 +88,7 @@ exports.tea_create_post = [
       notes: req.body.notes,
       created_on: new Date(),
       created_by: req.user._id,
+      img: uploadedImage.teaImage,
     });
 
     User.findById(tea.created_by)

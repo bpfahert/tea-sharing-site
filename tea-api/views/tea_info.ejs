@@ -30,6 +30,12 @@
         <%= tea.notes %>
         <p> <%= tea.created_on %></p>
         <p>Added by: <a href="<%= user_url %>"> <%= added_by %> </a></p>
+        <% if (tea.img) { %>
+          <img src="data:image/<%= tea.img.contentType%>;base64,
+          <%= tea.img.data.toString('base64') %>"
+        <% } else {%>
+          <p>There is no picture for this tea yet!</p>
+        <% } %>
     </div>
   </body>
 </html>
