@@ -145,7 +145,7 @@ exports.tea_create_post = [
 
   //UPDATE TEA FORM PAGE TO UPDATE INSTEAD OF CREATE IF TEA ALREADY EXISTS? OR JUST ADD A NEW VIEW PAGE OR ALLOW CHANGES ON TEA PAGE?
   exports.tea_update_get = (req, res) => {
-    Tea.findById(req.params.id).exec((err, tea) => {
+    Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
       if(err) {
         return next(err);
       }

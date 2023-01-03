@@ -21,11 +21,13 @@
     <% if (currentUser) { %>
       <h3>Hello <%= currentUser.username %></h3>
       <a href="/logout">Log out</a>
+      <% } %>
+      <% if (currentUser && currentUser.username === tea.created_by.username) { %>
       <div class="formdiv">
-          <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
-              <h2>Add Tea</h2>
+          <form method="POST" action="" className="teaform" id="updateteaform" enctype="multipart/form-data">
+              <h2>Update Tea</h2>
               <label htmlFor="teaname">Tea Name</label>
-              <input type="text" id="teaname" name="teaname" placeholder="Tea name"></input>
+              <input type="text" id="teaname" name="teaname" placeholder="Tea name" value="<%= tea.tea_name %>"></input>
               <label htmlFor="type">Type of Tea</label>
               <select id="type" name="type">
                 <option value="Green">Green</option>
@@ -57,7 +59,7 @@
           </form>
     </div>
     <% } else { %>
-      <h1>Please log in to add a new tea!</h1>
+      <h1>Only the user that created a tea can update it!</h1>
     <% } %>
   </body>
 </html>
