@@ -25,9 +25,9 @@
           <form method="POST" action="" className="userform" id="newuserform">
               <h2>New user signup</h2>
               <label htmlFor="username">Username</label>
-              <input type="text" id="username" name="username" placeholder="Username"></input>
+              <input type="text" id="username" name="username" placeholder="Username" required="required" maxlength="15"></input>
               <label for="password">Password</label>
-              <input type="password" id="password" name="password"></input>
+              <input type="password" id="password" name="password" required="required" minlength="3" maxlength="100"></input>
               <label htmlFor="favoritetea">Favorite Type of Tea</label>
               <select id="favoritetea" name="favoritetea">
                 <option value="Green">Green</option>

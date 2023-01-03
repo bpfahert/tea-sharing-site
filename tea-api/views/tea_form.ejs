@@ -25,7 +25,7 @@
           <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
               <h2>Add Tea</h2>
               <label htmlFor="teaname">Tea Name</label>
-              <input type="text" id="teaname" name="teaname" placeholder="Tea name"></input>
+              <input type="text" id="teaname" name="teaname" placeholder="Tea name" required="required" maxlength="50"></input>
               <label htmlFor="type">Type of Tea</label>
               <select id="type" name="type">
                 <option value="Green">Green</option>
@@ -35,7 +35,7 @@
                 <option value="White">White</option>
               </select>
               <label htmlFor="brand">Tea Brand</label>
-              <input type="text" id="brand" name="brand"></input>
+              <input type="text" id="brand" name="brand" maxlength="30"></input>
               <label htmlFor="rating">Tea Rating</label>
               <select id="rating" name="rating">
                 <option value="0">0</option>
@@ -51,7 +51,7 @@
                 <option value="10">10</option>
               </select> 
               <label htmlFor="Notes">Notes on Tea</label>
-              <input type="text" id="notes" name="notes"></input>
+              <input type="text" id="notes" name="notes" maxlength="500"></input>
               <input type="file" name="teaimg">Picture</input>
               <button type="submit">Submit</button>
           </form>

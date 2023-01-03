@@ -27,19 +27,19 @@
           <form method="POST" action="" className="teaform" id="updateteaform" enctype="multipart/form-data">
               <h2>Update Tea</h2>
               <label htmlFor="teaname">Tea Name</label>
-              <input type="text" id="teaname" name="teaname" placeholder="Tea name" value="<%= tea.tea_name %>"></input>
+              <input type="text" id="teaname" name="teaname" placeholder="Tea name" required="required" value="<%= tea.tea_name %>" maxlength="30"></input>
               <label htmlFor="type">Type of Tea</label>
-              <select id="type" name="type">
+              <select id="type" name="type" value="<%= tea.type %>">
                 <option value="Green">Green</option>
                 <option value="Black">Black</option>
                 <option value="Oolong">Oolong</option>
                 <option value="Herbal">Herbal</option>
                 <option value="White">White</option>
               </select>
-              <label htmlFor="brand">Tea Brand</label>
-              <input type="text" id="brand" name="brand"></input>
+              <label htmlFor="brand" maxlength="30">Tea Brand</label>
+              <input type="text" id="brand" name="brand" value="<%= tea.brand %>"></input>
               <label htmlFor="rating">Tea Rating</label>
-              <select id="rating" name="rating">
+              <select id="rating" name="rating" value="<%= tea.rating %>">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -53,8 +53,14 @@
                 <option value="10">10</option>
               </select> 
               <label htmlFor="Notes">Notes on Tea</label>
-              <input type="text" id="notes" name="notes"></input>
-              <input type="file" name="teaimg">Picture</input>
+              <input type="text" id="notes" name="notes" value="<%= tea.notes %>" maxlength="500"></input>
+              <input type="file" name="teaimg">
+              <% if (tea.img.data) { %>
+                <img src="data:image/<%= tea.img.contentType%>;base64,
+                <%= tea.img.data.toString('base64') %>"
+              <% } else {%>
+                <p>There is no picture for this tea yet!</p>
+              <% } %></input>
               <button type="submit">Submit</button>
           </form>
     </div>
