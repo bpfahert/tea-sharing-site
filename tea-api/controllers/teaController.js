@@ -120,7 +120,7 @@ exports.tea_create_post = [
 ];
   
   exports.tea_delete_get = (req, res, next) => {
-    Tea.findById(req.params.id).exec((err, tea) => {
+    Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
       if(err) {
         return next(err);
       }
@@ -142,8 +142,20 @@ exports.tea_create_post = [
     })
   };
   
+
+  //UPDATE TEA FORM PAGE TO UPDATE INSTEAD OF CREATE IF TEA ALREADY EXISTS? OR JUST ADD A NEW VIEW PAGE OR ALLOW CHANGES ON TEA PAGE?
   exports.tea_update_get = (req, res) => {
-    res.send("a ");
+    Tea.findById(req.params.id).exec((err, tea) => {
+      if(err) {
+        return next(err);
+      }
+      if (tea === null) {
+        const err = new Error ("Tea does not exist or has been deleted!");
+        err.status = 404;
+        return next(err);
+      }
+      res.render("tea_update", {title: "Update this tea", tea})
+    })
   };
   
   exports.tea_update_post = (req, res) => {

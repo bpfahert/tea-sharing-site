@@ -23,6 +23,7 @@
     <% } else { %>
       <h1>Log in to your account!</h1>
     <% } %>
+    <% if(currentUser && currentUser.username === tea.created_by.username) { %>
     <div class="teadeletediv">
         <p>Are you sure you want to delete <%= tea.tea_name %>?</p>
         <form method="POST" action="">
@@ -30,5 +31,8 @@
             <button type="submit">Delete</button>
         </form>
     </div>
+    <% } else { %>
+      <p>Only the user that added the tea can delete it.</p>
+    <% } %>
   </body>
 </html>
