@@ -72,10 +72,10 @@ exports.tea_create_post = [
   body("notes").trim().escape(),
   (req, res, next) => {
     const uploadedImage = {
-      teaImage: {
+      teaImage: req.file ? {
         data: fs.readFileSync(path.join(__dirname + "/../public/images/" + req.file.filename)),
       contentType: "image/png"
-      }
+      } : ""
     }
 
     const errors = validationResult(req);

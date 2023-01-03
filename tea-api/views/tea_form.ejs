@@ -10,6 +10,7 @@
     <div class="navbar">
       <a href="/">Home</a>
       <a href="/teas/tealist">Teas</a>
+      <a href="/teas/create">Add New Tea</a>
       <% if (currentUser) { %>
         <a href="<%= currentUser.url %>">Profile</a>
       <% } else { %>
@@ -20,43 +21,43 @@
     <% if (currentUser) { %>
       <h3>Hello <%= currentUser.username %></h3>
       <a href="/logout">Log out</a>
-    <% } else { %>
-      <h1>Log in to your account!</h1>
-    <% } %>
-    <div class="formdiv">
-        <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
-            <h2>Add Tea</h2>
-            <label htmlFor="teaname">Tea Name</label>
-            <input type="text" id="teaname" name="teaname" placeholder="Tea name"></input>
-            <label htmlFor="type">Type of Tea</label>
-            <select id="type" name="type">
-              <option value="Green">Green</option>
-              <option value="Black">Black</option>
-              <option value="Oolong">Oolong</option>
-              <option value="Herbal">Herbal</option>
-              <option value="White">White</option>
-            </select>
-            <label htmlFor="brand">Tea Brand</label>
-            <input type="text" id="brand" name="brand"></input>
-            <label htmlFor="rating">Tea Rating</label>
-            <select id="rating" name="rating">
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select> 
-            <label htmlFor="Notes">Notes on Tea</label>
-            <input type="text" id="notes" name="notes"></input>
-            <input type="file" name="teaimg">Picture</input>
-            <button type="submit">Submit</button>
-        </form>
+      <div class="formdiv">
+          <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
+              <h2>Add Tea</h2>
+              <label htmlFor="teaname">Tea Name</label>
+              <input type="text" id="teaname" name="teaname" placeholder="Tea name"></input>
+              <label htmlFor="type">Type of Tea</label>
+              <select id="type" name="type">
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="Oolong">Oolong</option>
+                <option value="Herbal">Herbal</option>
+                <option value="White">White</option>
+              </select>
+              <label htmlFor="brand">Tea Brand</label>
+              <input type="text" id="brand" name="brand"></input>
+              <label htmlFor="rating">Tea Rating</label>
+              <select id="rating" name="rating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select> 
+              <label htmlFor="Notes">Notes on Tea</label>
+              <input type="text" id="notes" name="notes"></input>
+              <input type="file" name="teaimg">Picture</input>
+              <button type="submit">Submit</button>
+          </form>
     </div>
+    <% } else { %>
+      <h1>Please log in to add a new tea!</h1>
+    <% } %>
   </body>
 </html>

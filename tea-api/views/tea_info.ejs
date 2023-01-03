@@ -9,6 +9,7 @@
     <div class="navbar">
       <a href="/">Home</a>
       <a href="/teas/tealist">Teas</a>
+      <a href="/teas/create">Add New Tea</a>
       <% if (currentUser) { %>
         <a href="<%= currentUser.url %>">Profile</a>
       <% } else { %>
@@ -30,11 +31,15 @@
         <%= tea.notes %>
         <p> <%= tea.created_on %></p>
         <p>Added by: <a href="<%= user_url %>"> <%= added_by %> </a></p>
-        <% if (tea.img) { %>
+        <% if (tea.img.data) { %>
           <img src="data:image/<%= tea.img.contentType%>;base64,
           <%= tea.img.data.toString('base64') %>"
         <% } else {%>
           <p>There is no picture for this tea yet!</p>
+        <% } %>
+        <% if (currentUser && currentUser.username === added_by) { %>
+          <p></p>
+          <a href="<%= tea.url %>/delete">Delete this tea</a>
         <% } %>
     </div>
   </body>
