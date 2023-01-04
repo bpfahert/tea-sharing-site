@@ -10,6 +10,7 @@
     <div class="navbar">
       <a href="/">Home</a>
       <a href="/teas/tealist">Teas</a>
+      <a href="/teas/create">Add New Tea</a>
       <% if (currentUser) { %>
         <a href="<%= currentUser.url %>">Profile</a>
       <% } else { %>
@@ -23,14 +24,42 @@
     <% } else { %>
       <h1>Log in to your account!</h1>
     <% } %>
-    <div>
-      User info:
+    <% if (currentUser) { %>
+      <h3>Hello <%= currentUser.username %></h3>
+      <a href="/logout">Log out</a>
+    <% } else { %>
+      <h1>Log in to your account!</h1>
+    <% } %>
+    <div class="userteas">
+      <h3>Teas recently added by friends: </h3>
     </div>
-    <div>
-      Recently added tea:
-    </div>
-    <div>
-      Top teas:
-    </div>
+      <div class="tealist">
+        <h2>Your Teas</h2>
+          <ul>
+              <% for(let i = 0; i < user_tea_list.length; i ++) { %>
+                <div class="teacard"> 
+                  <li> <a href='<%= user_tea_list[i].url %>'> <%= user_tea_list[i].tea_name %> </a> </a> 
+                  <li>Type: <%= user_tea_list[i].type %> </li> 
+                  <li>Brand: <%= user_tea_list[i].brand %>  </li> 
+                  <li>Rating(out of 10): <%= user_tea_list[i].rating %> </li> 
+                  <li>Notes: <%= user_tea_list[i].notes %> </li> 
+                </div>
+              <% } %>
+          </ul>
+      </div>
+      <div class="tealist">
+        <h2>Top Teas:</h2>
+          <ul>
+              <% for(let i = 0; i < top_list.length; i ++) { %>
+                <div class="teacard"> 
+                  <li> <a href='<%= top_list[i].url %>'> <%= top_list[i].tea_name %> </a> </a> 
+                  <li>Type: <%= top_list[i].type %> </li> 
+                  <li>Brand: <%= top_list[i].brand %>  </li> 
+                  <li>Rating(out of 10): <%= top_list[i].rating %> </li> 
+                  <li>Notes: <%= top_list[i].notes %> </li> 
+                </div>
+              <% } %>
+          </ul>
+      </div>
   </body>
 </html>

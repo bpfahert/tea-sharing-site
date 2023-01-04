@@ -36,9 +36,67 @@
               <li>Added on: <%= new_tea_list[i].created_on %> </li>
             </div>
         <% } %>
-    </ul>
-</div>
-    <div class="tealistdiv">
+      </ul>
+    </div>
+    <div class="greenteas">
+      <h3>Green Teas</h3>
+      <ul>
+        <% for(let i = 0; i < green_tea_list.length; i ++) { %>
+          <div class="teacard"> 
+            <li> <a href='<%= green_tea_list[i].url %>'> <%= green_tea_list[i].tea_name %> </a> </a> 
+            <li>Brand: <%= green_tea_list[i].brand %>  </li> 
+            <li>Rating(out of 10): <%= green_tea_list[i].rating %> </li> 
+          </div>
+        <% } %>
+      </ul>
+    </div>
+    <div class="blackteas">
+      <h3>Black Teas</h3>
+      <ul>
+        <% for(let i = 0; i < black_tea_list.length; i ++) { %>
+          <div class="teacard"> 
+            <li> <a href='<%= black_tea_list[i].url %>'> <%= black_tea_list[i].tea_name %> </a> </a> 
+            <li>Brand: <%= black_tea_list[i].brand %>  </li> 
+            <li>Rating(out of 10): <%= black_tea_list[i].rating %> </li> 
+          </div>
+        <% } %>
+      </ul>
+    </div>
+    <div class="oolongteas">
+      <h3>Oolong Teas</h3>
+      <ul>
+        <% for(let i = 0; i < oolong_tea_list.length; i ++) { %>
+          <div class="teacard"> 
+            <li> <a href='<%= oolong_tea_list[i].url %>'> <%= oolong_tea_list[i].tea_name %> </a> </a> 
+            <li>Brand: <%= oolong_tea_list[i].brand %>  </li> 
+            <li>Rating(out of 10): <%= oolong_tea_list[i].rating %> </li>  
+          </div>
+        <% } %>
+      </ul>
+    </div>
+    <div class="herbalteas">
+      <h3>Herbal Teas</h3>
+      <ul>
+        <% for(let i = 0; i < herbal_tea_list.length; i ++) { %>
+          <div class="teacard"> 
+            <li> <a href='<%= herbal_tea_list[i].url %>'> <%= herbal_tea_list[i].tea_name %> </a> </a> 
+            <li>Brand: <%= herbal_tea_list[i].brand %>  </li> 
+            <li>Rating(out of 10): <%= herbal_tea_list[i].rating %> </li> 
+          </div>
+        <% } %>
+      </ul>
+    </div>
+    <div class="whiteteas">
+      <h3>White Teas</h3>
+      <% for(let i = 0; i < white_tea_list.length; i ++) { %>
+        <div class="teacard"> 
+          <li> <a href='<%= white_tea_list[i].url %>'> <%= white_tea_list[i].tea_name %> </a> </a> 
+          <li>Brand: <%= white_tea_list[i].brand %>  </li> 
+          <li>Rating(out of 10): <%= white_tea_list[i].rating %> </li> 
+        </div>
+      <% } %>
+    </div>
+    <div class="tealist">
       <h2> All Teas</h2>
         <ul>
             <% for(let i = 0; i < tea_list.length; i ++) { %>
@@ -50,7 +108,6 @@
                 <li>Notes: <%= tea_list[i].notes %> </li> 
               </div>
             <% } %>
-
         </ul>
     </div>
   </body>

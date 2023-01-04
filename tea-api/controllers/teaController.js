@@ -12,7 +12,22 @@ const mongoose = require("mongoose");
 
 
 exports.index = (req, res) => {
-    res.render("index", {title: "Tea sharing home page!"});
+  async.parallel(
+    {
+      user_teas(callback) {
+        Tea.find({created_by: req.user}, "tea_name type brand rating notes created_on created_by img updated_on").sort({created_on: -1}).exec(callback);
+      },
+
+      top_teas(callback) {
+        Tea.find({}, "tea_name type brand rating notes").sort({rating: -1}).limit(5).exec(callback);
+      }
+    },
+    (err, results) => {
+      if(err) {
+        return next(err);
+      }
+      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas});
+    });
 };
 
 exports.tea_list = (req, res, next) => {
@@ -25,12 +40,32 @@ exports.tea_list = (req, res, next) => {
       recently_added_teas(callback) {
         Tea.find({}, "created_on tea_name type brand rating notes").sort({created_on: -1}).limit(5).exec(callback);
       },
+
+      green_teas(callback) {
+        Tea.find({ type: "Green"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+      },
+
+      black_teas(callback) {
+        Tea.find({ type: "Black"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+      },
+
+      oolong_teas(callback) {
+        Tea.find({ type: "Oolong"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+      },
+
+      herbal_teas(callback) {
+        Tea.find({ type: "Herbal"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+      },
+
+      white_teas(callback) {
+        Tea.find({ type: "White"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+      }
     },
       (err, results) => {
         if (err) {
           return next(err);
         }
-        res.render("tea_list", {title: "Tea List", tea_list: results.list_teas, new_tea_list: results.recently_added_teas});
+        res.render("tea_list", {title: "Tea List", tea_list: results.list_teas, new_tea_list: results.recently_added_teas, green_tea_list: results.green_teas, black_tea_list: results.black_teas, oolong_tea_list: results.oolong_teas, herbal_tea_list: results.herbal_teas, white_tea_list: results.white_teas});
       });
 };
 
@@ -52,7 +87,6 @@ exports.tea_info = (req, res, next) => {
     res.render("tea_info", {
       title: `${tea.tea_name}`,
       tea,
-      added_by: tea.created_by.username,
       user_url : tea.created_by.url,
     })
   })

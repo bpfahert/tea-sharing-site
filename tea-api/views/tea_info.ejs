@@ -30,16 +30,16 @@
         <p><%= tea.rating %></p>
         <%= tea.notes %>
         <p> <%= tea.created_on %></p>
-        <p>Added by: <a href="<%= user_url %>"> <%= added_by %> </a></p>
+        <p>Added by: <a href="<%= user_url %>"> <%= tea.created_by.username %> </a></p>
         <% if (tea.img.data) { %>
           <img src="data:image/<%= tea.img.contentType%>;base64,
           <%= tea.img.data.toString('base64') %>"
         <% } else {%>
           <p>There is no picture for this tea yet!</p>
         <% } %>
-        <% if (currentUser && currentUser.username === added_by) { %>
+        <% if (currentUser && currentUser.username === tea.created_by.username) { %>
           <p></p>
-          <a href="<%= tea.url %>/delete">Delete this tea</a>
+          <a href="<%= tea.created_by.url %>/delete">Delete this tea</a>
         <% } %>
     </div>
   </body>
