@@ -17,6 +17,10 @@ router.get('/:id/update', tea_controller.tea_update_get);
 
 router.post('/:id/update', tea_controller.tea_update_post);
 
+router.get('/:id/recommend', tea_controller.tea_recommend_get);
+
+router.post('/:id/recommend', tea_controller.tea_recommend_post);
+
 router.get('/tealist', tea_controller.tea_list);
 
 router.get('/:id', tea_controller.tea_info);

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Add a new tea!</p>
+    <div class="navbar">
+      <a href="/">Home</a>
+      <a href="/teas/tealist">Teas</a>
+      <a href="/teas/create">Add New Tea</a>
+      <% if (currentUser) { %>
+        <a href="<%= currentUser.url %>">Profile</a>
+      <% } else { %>
+        <a href="/user/login">Log in</a>
+      <% } %>
+      <a href="/user/userlist">Friends</a>
+    </div>
+    <% if (currentUser) { %>
+      <h3>Hello <%= currentUser.username %></h3>
+      <a href="/logout">Log out</a>
+      <h2><%= recommended_tea.tea_name %></h2>
+      <div class="formdiv">
+          <form method="POST" action="" className="teaform" id="recommendationform">
+              <h4>Recommend this Tea</h4>
+              <select id="user" name="user">
+                <% for (i= 0; i < user_list.length; i++) {%>
+                  <% if(currentUser.username !== user_list[i].username) { %>
+                  <option value="<%= user_list[i].username %>""><%= user_list[i].username %></option>
+                  <% } %>
+                <% } %>
+              </select>
+              <button type="submit">Submit</button>
+          </form>
+    </div>
+    <% } else { %>
+      <h1>Please log in to recommend a tea!</h1>
+    <% } %>
+  </body>
+</html>

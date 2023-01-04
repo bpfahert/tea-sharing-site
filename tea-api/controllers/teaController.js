@@ -6,12 +6,11 @@ const fs = require('fs');
 const User = require("../models/user");
 const multer = require('multer');
 
-//UPLOAD IS PLACING IMG IN PROJECT PUBLIC IMAGE FOLDER AND IN UPLOADS FOLDER{TEMPORARILY?}, NEED TO GET IT IN API FOLDER/UPLOADS
 const upload = multer({dest: './public/images/'});
 const mongoose = require("mongoose");
 
 
-exports.index = (req, res) => {
+exports.index = (req, res, next) => {
   async.parallel(
     {
       user_teas(callback) {
@@ -20,13 +19,17 @@ exports.index = (req, res) => {
 
       top_teas(callback) {
         Tea.find({}, "tea_name type brand rating notes").sort({rating: -1}).limit(5).exec(callback);
+      },
+
+      tea_recommendations(callback) {
+        User.find({username: req.user}, "username").populate("recommended_teas").exec(callback);
       }
     },
     (err, results) => {
       if(err) {
         return next(err);
       }
-      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas});
+      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, recommendations: results.tea_recommendations});
     });
 };
 
@@ -88,6 +91,7 @@ exports.tea_info = (req, res, next) => {
       title: `${tea.tea_name}`,
       tea,
       user_url : tea.created_by.url,
+      tea_id: req.params.id
     })
   })
 };
@@ -176,9 +180,7 @@ exports.tea_create_post = [
     })
   };
   
-
-  //UPDATE TEA FORM PAGE TO UPDATE INSTEAD OF CREATE IF TEA ALREADY EXISTS? OR JUST ADD A NEW VIEW PAGE OR ALLOW CHANGES ON TEA PAGE?
-  exports.tea_update_get = (req, res) => {
+  exports.tea_update_get = (req, res, next) => {
     Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
       if(err) {
         return next(err);
@@ -188,10 +190,33 @@ exports.tea_create_post = [
         err.status = 404;
         return next(err);
       }
-      res.render("tea_update", {title: "Update this tea", tea})
+      res.render("tea_update", {title: "Update this tea", tea});
     })
   };
   
-  exports.tea_update_post = (req, res) => {
+  exports.tea_update_post = (req, res, next) => {
     res.send("a ");
+  };
+
+  exports.tea_recommend_get = (req, res, next) => {
+    async.parallel(
+      {
+        tea_info(callback) {
+          Tea.findById(req.params.id).populate("created_by").exec(callback);
+        },
+        
+        user_info(callback) {
+          User.find({}, "username").sort({username : 1}).exec(callback);
+        }
+      }, 
+        (err, results) => {
+          if (err) {
+            return next(err);
+          }
+        res.render("recommend_form", {title: "Recommend this tea to a friend!", user_list: results.user_info, recommended_tea: results.tea_info});
+      });
+    };
+
+  exports.tea_recommend_post = (req, res, next) => {
+
   };

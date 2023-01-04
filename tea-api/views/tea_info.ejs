@@ -23,24 +23,23 @@
     <% } else { %>
       <h1>Log in to your account!</h1>
     <% } %>
-    <div class="teainfodiv">
-        <p>Tea name: <%= title %></p>
-        Type: <%= tea.type %>
-        <p><%= tea.brand %></p>
-        <p><%= tea.rating %></p>
-        <%= tea.notes %>
-        <p> <%= tea.created_on %></p>
-        <p>Added by: <a href="<%= user_url %>"> <%= tea.created_by.username %> </a></p>
-        <% if (tea.img.data) { %>
-          <img src="data:image/<%= tea.img.contentType%>;base64,
-          <%= tea.img.data.toString('base64') %>"
-        <% } else {%>
-          <p>There is no picture for this tea yet!</p>
-        <% } %>
-        <% if (currentUser && currentUser.username === tea.created_by.username) { %>
-          <p></p>
-          <a href="<%= tea.created_by.url %>/delete">Delete this tea</a>
-        <% } %>
-    </div>
+    <p>Tea name: <%= title %></p>
+    Type: <%= tea.type %>
+    <p><%= tea.brand %></p>
+    <p><%= tea.rating %></p>
+    <%= tea.notes %>
+    <p> <%= tea.created_on %></p>
+    <p>Added by: <a href="<%= user_url %>"> <%= tea.created_by.username %> </a></p>
+    <% if (tea.img.data) { %>
+      <img src="data:image/<%= tea.img.contentType%>;base64,
+      <%= tea.img.data.toString('base64') %>"
+    <% } else {%>
+      <p>There is no picture for this tea yet!</p>
+    <% } %>
+    <a href="/teas/<%= tea_id %>/recommend">Recommend this tea to a user</a>
+    <% if (currentUser && currentUser.username === tea.created_by.username) { %>
+      <p></p>
+      <a href="<%= tea.created_by.url %>/delete">Delete this tea</a>
+    <% } %>
   </body>
 </html>

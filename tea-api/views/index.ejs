@@ -24,12 +24,9 @@
     <% } else { %>
       <h1>Log in to your account!</h1>
     <% } %>
-    <% if (currentUser) { %>
-      <h3>Hello <%= currentUser.username %></h3>
-      <a href="/logout">Log out</a>
-    <% } else { %>
-      <h1>Log in to your account!</h1>
-    <% } %>
+    <div class="recommendedteas">
+      <h2>Recommended Teas</h2>
+    </div>
     <div class="userteas">
       <h3>Teas recently added by friends: </h3>
     </div>

@@ -8,6 +8,7 @@ const UserSchema = new Schema({
     account_created: {type: Date},
     favorite_teas: {type: Array},
     teas_added: {type: Array},
+    recommended_teas: {type: Schema.Types.ObjectId, ref: "Tea"},
     email: {type: String},
 });
 
