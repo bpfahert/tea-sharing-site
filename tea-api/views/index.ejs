@@ -26,6 +26,19 @@
     <% } %>
     <div class="recommendedteas">
       <h2>Recommended Teas</h2>
+      <% if(recommended_teas[0].recommended_teas[0]) { %>
+      <ul>
+        <% for(let i = 0; i < recommended_teas.length; i ++) { %>
+          <div class="teacard"> 
+            <li> <a href='<%= recommended_teas[i].url %>'> <%= recommended_teas[i].recommended_teas[i].tea_name %> </a> </a> 
+            <li>Type: <%= recommended_teas[i].recommended_teas[i].type %> </li> 
+            <li>Recommended By:  </li> 
+          </div>
+        <% } %>
+    </ul>
+    <% } else { %>
+      <p>You have no recommendations currently.</p>
+    <% } %>
     </div>
     <div class="userteas">
       <h3>Teas recently added by friends: </h3>

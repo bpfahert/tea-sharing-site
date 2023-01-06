@@ -25,10 +25,13 @@
       <div class="formdiv">
           <form method="POST" action="" className="teaform" id="recommendationform">
               <h4>Recommend this Tea</h4>
+              <select id="recommendedtea" name="recommendedtea">
+              <option value="<%= recommended_tea.id %>"><%= recommended_tea.tea_name %></option>
+              </select>
               <select id="user" name="user">
                 <% for (i= 0; i < user_list.length; i++) {%>
                   <% if(currentUser.username !== user_list[i].username) { %>
-                  <option value="<%= user_list[i].username %>""><%= user_list[i].username %></option>
+                  <option value="<%= user_list[i].id %>""><%= user_list[i].username %></option>
                   <% } %>
                 <% } %>
               </select>

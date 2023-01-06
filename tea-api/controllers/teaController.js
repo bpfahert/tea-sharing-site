@@ -21,15 +21,17 @@ exports.index = (req, res, next) => {
         Tea.find({}, "tea_name type brand rating notes").sort({rating: -1}).limit(5).exec(callback);
       },
 
+      //index page throws username is not defined error if not logged in
+      //TODO: figure out why recommended teas is an array inside of an array
       tea_recommendations(callback) {
-        User.find({username: req.user}, "username").populate("recommended_teas").exec(callback);
+        User.find({username: req.user.username}).populate("recommended_teas").exec(callback);
       }
     },
     (err, results) => {
       if(err) {
         return next(err);
       }
-      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, recommendations: results.tea_recommendations});
+      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, recommended_teas: results.tea_recommendations});
     });
 };
 
@@ -217,6 +219,26 @@ exports.tea_create_post = [
       });
     };
 
-  exports.tea_recommend_post = (req, res, next) => {
+  exports.tea_recommend_post = [
+    body("recommendedtea"),
+    body("user"),
+    (req, res, next) => {
+      const errors = validationResult(req);
 
-  };
+      //need to update so there is an array of references
+      User.findById(req.body.user).exec((err, friend) => {
+        if(err) {
+          return next(err);
+        }
+        friend.recommended_teas.push(req.body.recommendedtea);
+
+        friend.save((err) => {
+          if(err) {
+            return next(err);
+          }
+        })
+    })
+
+      res.redirect("/teas");
+    }
+];
