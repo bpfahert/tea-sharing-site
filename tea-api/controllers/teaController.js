@@ -23,7 +23,6 @@ exports.index = (req, res, next) => {
 
       //index page throws username is not defined error if not logged in
       //TODO: figure out why recommended teas is an array inside of an array
-      //POPULATE ISN'T WORKING ON RECOMMENDED_BY - ONLY SHOWS BLANK ARRAY FOR SOME REASON
       tea_recommendations(callback) {
         User.find({username: req.user.username}).populate("recommended_teas").populate("recommended_by").exec(callback);
       },
@@ -197,9 +196,43 @@ exports.tea_create_post = [
     })
   };
   
-  exports.tea_update_post = (req, res, next) => {
-    res.send("a ");
-  };
+  exports.tea_update_post = [
+    upload.single('teaimg'),
+    body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
+    body("type"),
+    body("brand").trim().isLength({min: 1}).escape(),
+    body("rating"),
+    body("notes").trim().escape(),
+    (req, res, next) => {
+      const uploadedImage = {
+        teaImage: req.file ? {
+          data: fs.readFileSync(path.join(__dirname + "/../public/images/" + req.file.filename)),
+        contentType: "image/png"
+        } : ""
+      }
+  
+      const errors = validationResult(req);
+  
+      const tea = new Tea({
+        tea_name: req.body.teaname,
+        type: req.body.type,
+        brand: req.body.brand,
+        rating: req.body.rating,
+        notes: req.body.notes,
+        created_by: req.user._id,
+        updated_on: new Date(),
+        img: uploadedImage.teaImage,
+        _id: req.params.id,
+      });
+      console.log(tea);
+      Tea.findByIdAndUpdate(req.params.id, tea, {}, (err, updatedtea) => {
+        if(err) {
+          return next(err);
+        }
+      })      
+      res.redirect("/teas/tealist");
+      }
+  ];
 
   exports.tea_recommend_get = (req, res, next) => {
     async.parallel(
