@@ -9,6 +9,8 @@ const UserSchema = new Schema({
     favorite_teas: {type: Array},
     teas_added: {type: Array},
     recommended_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
+    //change to array of ids?
+    recommended_by: [{type: Schema.Types.ObjectId, ref:"User"}],
     email: {type: String},
 });
 

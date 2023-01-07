@@ -23,9 +23,10 @@ exports.index = (req, res, next) => {
 
       //index page throws username is not defined error if not logged in
       //TODO: figure out why recommended teas is an array inside of an array
+      //POPULATE ISN'T WORKING ON RECOMMENDED_BY - ONLY SHOWS BLANK ARRAY FOR SOME REASON
       tea_recommendations(callback) {
-        User.find({username: req.user.username}).populate("recommended_teas").exec(callback);
-      }
+        User.find({username: req.user.username}).populate("recommended_teas").populate("recommended_by").exec(callback);
+      },
     },
     (err, results) => {
       if(err) {
@@ -219,18 +220,20 @@ exports.tea_create_post = [
       });
     };
 
+    //TODO: Update so that the user who recommended the tea is kept track of
   exports.tea_recommend_post = [
     body("recommendedtea"),
+    body("recommender"),
     body("user"),
     (req, res, next) => {
       const errors = validationResult(req);
 
-      //need to update so there is an array of references
       User.findById(req.body.user).exec((err, friend) => {
         if(err) {
           return next(err);
         }
         friend.recommended_teas.push(req.body.recommendedtea);
+        friend.recommended_by.push(req.body.recommender);
 
         friend.save((err) => {
           if(err) {

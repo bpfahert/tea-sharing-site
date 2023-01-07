@@ -28,6 +28,7 @@
               <select id="recommendedtea" name="recommendedtea">
               <option value="<%= recommended_tea.id %>"><%= recommended_tea.tea_name %></option>
               </select>
+              <input type="hidden" name="recommender" id="recommender" value="<%= currentUser.id %>">
               <select id="user" name="user">
                 <% for (i= 0; i < user_list.length; i++) {%>
                   <% if(currentUser.username !== user_list[i].username) { %>
