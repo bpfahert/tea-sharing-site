@@ -23,15 +23,16 @@ exports.index = (req, res, next) => {
 
       //index page throws username is not defined error if not logged in
       //TODO: figure out why recommended teas is an array inside of an array
+      //TODO: Populate recommended_by if obj doesnt work out
       tea_recommendations(callback) {
-        User.find({username: req.user.username}).populate("recommended_teas").populate("recommended_by").exec(callback);
+        User.find({username: req.user.username}).populate("recommended_teas.tea_rec").populate("recommended_teas.recommended_by").exec(callback);
       },
     },
     (err, results) => {
       if(err) {
         return next(err);
       }
-      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, recommended_teas: results.tea_recommendations});
+      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, teas_recommended_list: results.tea_recommendations});
     });
 };
 
@@ -74,7 +75,6 @@ exports.tea_list = (req, res, next) => {
       });
 };
 
-//TODO: Fix bug where username is undefined (added by:)
 exports.tea_info = (req, res, next) => {
 
   Tea.findById(req.params.id)
@@ -253,11 +253,12 @@ exports.tea_create_post = [
       });
     };
 
-    //TODO: Update so that the user who recommended the tea is kept track of
+    //TODO: Update so that the message that comes with the recommendation is stored in the user db
   exports.tea_recommend_post = [
     body("recommendedtea"),
     body("recommender"),
     body("user"),
+    body("recmessage"),
     (req, res, next) => {
       const errors = validationResult(req);
 
@@ -265,8 +266,14 @@ exports.tea_create_post = [
         if(err) {
           return next(err);
         }
-        friend.recommended_teas.push(req.body.recommendedtea);
-        friend.recommended_by.push(req.body.recommender);
+        let tea_obj = {
+          tea_rec: req.body.recommendedtea,
+          recommended_by: req.body.recommender,
+          message: req.body.recmessage,
+        };
+        friend.recommended_teas.push(tea_obj);
+        // friend.recommended_teas.push(req.body.recommendedtea);
+        // friend.recommended_by.push(req.body.recommender);
 
         friend.save((err) => {
           if(err) {
@@ -278,3 +285,33 @@ exports.tea_create_post = [
       res.redirect("/teas");
     }
 ];
+//ASYNC SERIES? Add teas/teaid/save to routes
+//line 298 saved_teas is undefined for some reason
+  exports.tea_save_post = (req, res, next) => {
+
+    Tea.findById(req.params.id).exec((err, tea) => {
+      if(err) {
+        return next(err);
+      }
+      if (tea === null) {
+        const err = new Error ("Tea does not exist!");
+        err.status = 404;
+        return next(err);
+      }
+      User.findById(req.body.user).exec((err, self) => {
+        if(err) {
+          return next(err);
+        }
+        self.saved_teas.push(tea);
+
+        friend.save((err) => {
+          if(err) {
+            return next(err);
+          }
+        })
+        
+      })
+      res.redirect("/teas");
+    })
+    }
+    

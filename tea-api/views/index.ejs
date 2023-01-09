@@ -9,7 +9,7 @@
     <p>Tea sharing site!</p>
     <div class="navbar">
       <% if (currentUser) { %>
-        <a href="/"><%= currentUser.username %></a>
+        <a href="/teas"><%= currentUser.username %></a>
       <% } else { %>
         <a href="/user/create">Sign up</a>
       <% } %>
@@ -30,16 +30,17 @@
     <% } %>
     <div class="recommendedteas">
       <h2>Recommended Teas</h2>
-      <% if(recommended_teas[0].recommended_teas[0]) { %>
-      <ul>
-        <% for(let i = 0; i < recommended_teas[0].recommended_teas.length; i ++) { %>
-          <div class="teacard"> 
-            <li> <a href='<%= recommended_teas[0].recommended_teas[i].url %>'> <%= recommended_teas[0].recommended_teas[i].tea_name %> </a> </a> 
-            <li>Type: <%= recommended_teas[0].recommended_teas[i].type %> </li> 
-            <li>Recommended By: <a href="<%= recommended_teas[0].recommended_by[i].url%>"> <%= recommended_teas[0].recommended_by[i].username %> </a></li> 
-          </div>
-        <% } %>
-    </ul>
+      <% if(teas_recommended_list[0].recommended_teas[0]) { %>
+        <ul>
+          <% for(let i = 0; i < teas_recommended_list[0].recommended_teas.length; i ++) { %>
+            <div class="teacard"> 
+              <li> <a href='<%= teas_recommended_list[0].recommended_teas[i].tea_rec.url %>'> <%= teas_recommended_list[0].recommended_teas[i].tea_rec.tea_name %> </a> </li>
+              <li>Type: <%= teas_recommended_list[0].recommended_teas[i].tea_rec.type %> </li> 
+              <li>Recommended By: <a href="<%= teas_recommended_list[0].recommended_teas[i].recommended_by.url%>"> <%= teas_recommended_list[0].recommended_teas[i].recommended_by.username %> </a></li> 
+              <li>Message: "<%= teas_recommended_list[0].recommended_teas[i].message %>"</li>
+            </div>
+          <% } %>
+        </ul>
     <% } else { %>
       <p>You have no recommendations currently.</p>
     <% } %>

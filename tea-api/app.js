@@ -101,7 +101,7 @@ app.post(
   "/userlogin",
   passport.authenticate("local", {
     successRedirect: "/teas/tealist",
-    failureRedirect: "/user/userlist"
+    failureRedirect: "/user/login"
   })
   );
 
@@ -110,7 +110,7 @@ app.get("/logout", (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/teas/");
+    res.redirect("/user/login");
   });
 });
 

@@ -21,6 +21,8 @@ router.get('/:id/recommend', tea_controller.tea_recommend_get);
 
 router.post('/:id/recommend', tea_controller.tea_recommend_post);
 
+router.get('/:id/save', tea_controller.tea_save_post);
+
 router.get('/tealist', tea_controller.tea_list);
 
 router.get('/:id', tea_controller.tea_info);

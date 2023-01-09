@@ -8,10 +8,17 @@ const UserSchema = new Schema({
     account_created: {type: Date},
     favorite_teas: {type: Array},
     teas_added: {type: Array},
-    recommended_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
+    recommended_teas: [{
+        tea_rec: {type: Schema.Types.ObjectId, ref:"Tea"},
+        recommended_by: {type: Schema.Types.ObjectId, ref: "User"},
+        message: {type: String}
+    }],
+    // recommended_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
+    
     //change to array of ids?
-    recommended_by: [{type: Schema.Types.ObjectId, ref:"User"}],
+    // recommended_by: [{type: Schema.Types.ObjectId, ref:"User"}],
     email: {type: String},
+    saved_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
 });
 
 UserSchema.virtual("url").get(function () {

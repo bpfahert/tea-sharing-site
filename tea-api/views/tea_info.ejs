@@ -8,7 +8,7 @@
     <h1><%= title %></h1>
     <div class="navbar">
       <% if (currentUser) { %>
-        <a href="/"><%= currentUser.username %></a>
+        <a href="/teas"><%= currentUser.username %></a>
       <% } else { %>
         <a href="/user/create">Sign up</a>
       <% } %>
@@ -40,6 +40,8 @@
     <% } else {%>
       <p>There is no picture for this tea yet!</p>
     <% } %>
+    <p></p>
+    <a href="/user/userlist">Save this tea for later</a>
     <p></p>
     <a href="/teas/<%= tea_id %>/recommend">Recommend this tea to a user</a>
     <% if (currentUser && currentUser.username === tea.created_by.username) { %>

@@ -46,6 +46,7 @@ exports.user_create_post = [
     const user = new User({
       username: req.body.username,
       password: req.body.password,
+      email: req.body.email,
       favorite_tea_type: req.body.favoritetea,
     });
 
