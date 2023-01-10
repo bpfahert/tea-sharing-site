@@ -38,6 +38,7 @@
               <li>Type: <%= teas_recommended_list[0].recommended_teas[i].tea_rec.type %> </li> 
               <li>Recommended By: <a href="<%= teas_recommended_list[0].recommended_teas[i].recommended_by.url%>"> <%= teas_recommended_list[0].recommended_teas[i].recommended_by.username %> </a></li> 
               <li>Message: "<%= teas_recommended_list[0].recommended_teas[i].message %>"</li>
+              <button type="button" class="deletebutton">Delete this recommendation</li>
             </div>
           <% } %>
         </ul>
@@ -45,8 +46,17 @@
       <p>You have no recommendations currently.</p>
     <% } %>
     </div>
-    <div class="userteas">
+    <div class="friendacivity">
       <h3>Teas recently added by friends: </h3>
+      <ul class="activityfeed">
+        <% for(let i = 0; i < recent_tea_list.length; i++) { %>
+          <% if(recent_tea_list[i].type === "Herbal" || recent_tea_list[i].type === "Oolong" ) { %>
+            <li class="activityentry"><a href="<%= recent_tea_list[i].created_by.url %>" ><%= recent_tea_list[i].created_by.username %></a> added an <%= recent_tea_list[i].type %> tea called <a href="<%= recent_tea_list[i].url %>"" ><%= recent_tea_list[i].tea_name %></a></li>
+          <% } else { %>
+            <li class="activityentry"><a href="<%= recent_tea_list[i].created_by.url %>" ><%= recent_tea_list[i].created_by.username %></a> added a <%= recent_tea_list[i].type %> tea called <a href="<%= recent_tea_list[i].url %>"" ><%= recent_tea_list[i].tea_name %></a></li>
+          <% } %>
+        <% } %>
+      </ul>
     </div>
       <div class="tealist">
         <h2>Your Teas</h2>

@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     password: {type: String, required: true},
     favorite_tea_type: {type: String},
     account_created: {type: Date},
-    favorite_teas: {type: Array},
+    favorite_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
     teas_added: {type: Array},
     recommended_teas: [{
         tea_rec: {type: Schema.Types.ObjectId, ref:"Tea"},

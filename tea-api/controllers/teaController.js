@@ -21,9 +21,12 @@ exports.index = (req, res, next) => {
         Tea.find({}, "tea_name type brand rating notes").sort({rating: -1}).limit(5).exec(callback);
       },
 
+      recent_teas(callback) {
+        Tea.find({}, "tea_name type rating created_by").populate("created_by").sort({created_on: -1}).limit(10).exec(callback);
+      },
+
       //index page throws username is not defined error if not logged in
       //TODO: figure out why recommended teas is an array inside of an array
-      //TODO: Populate recommended_by if obj doesnt work out
       tea_recommendations(callback) {
         User.find({username: req.user.username}).populate("recommended_teas.tea_rec").populate("recommended_teas.recommended_by").exec(callback);
       },
@@ -32,7 +35,7 @@ exports.index = (req, res, next) => {
       if(err) {
         return next(err);
       }
-      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, teas_recommended_list: results.tea_recommendations});
+      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, recent_tea_list: results.recent_teas, teas_recommended_list: results.tea_recommendations});
     });
 };
 
