@@ -41,7 +41,9 @@
       <p>There is no picture for this tea yet!</p>
     <% } %>
     <p></p>
-    <a href="/user/userlist">Save this tea for later</a>
+    <a href="<%= tea.url %>/save">Save this tea for later</a>
+    <p></p>
+    <a href="<%= tea.url %>/favorite">Add this tea to your favorites</a>
     <p></p>
     <a href="/teas/<%= tea_id %>/recommend">Recommend this tea to a user</a>
     <% if (currentUser && currentUser.username === tea.created_by.username) { %>

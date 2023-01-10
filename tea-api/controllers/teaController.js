@@ -12,6 +12,7 @@ const mongoose = require("mongoose");
 
 exports.index = (req, res, next) => {
   async.parallel(
+    //TODO: Combine some of these if possible
     {
       user_teas(callback) {
         Tea.find({created_by: req.user}, "tea_name type brand rating notes created_on created_by img updated_on").sort({created_on: -1}).exec(callback);
@@ -30,12 +31,28 @@ exports.index = (req, res, next) => {
       tea_recommendations(callback) {
         User.find({username: req.user.username}).populate("recommended_teas.tea_rec").populate("recommended_teas.recommended_by").exec(callback);
       },
+
+      saved_teas(callback) {
+        User.find({username: req.user.username}).populate("saved_teas").exec(callback);
+      },
+
+      favorite_teas(callback) {
+        User.find({username: req.user.username}).populate("favorite_teas").exec(callback);
+      },
+
     },
     (err, results) => {
       if(err) {
         return next(err);
       }
-      res.render("index", {title: "Tea sharing home page!", user_tea_list: results.user_teas, top_list: results.top_teas, recent_tea_list: results.recent_teas, teas_recommended_list: results.tea_recommendations});
+      res.render("index", {title: "Tea sharing home page!", 
+      user_tea_list: results.user_teas, 
+      top_list: results.top_teas, 
+      recent_tea_list: results.recent_teas, 
+      teas_recommended_list: results.tea_recommendations,
+      saved_teas_list: results.saved_teas,
+      favorite_teas_list: results.favorite_teas
+    });
     });
 };
 
@@ -144,7 +161,8 @@ exports.tea_create_post = [
         err.status = 404;
         return next(err);
       }
-      creator.teas_added.push(tea);
+      //Changed to tea._id to store only id reference instead of full object
+      creator.teas_added.push(tea._id);
       creator.save((err) => {
         if(err) {
           return next(err);
@@ -162,159 +180,181 @@ exports.tea_create_post = [
   }
 ];
   
-  exports.tea_delete_get = (req, res, next) => {
-    Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
+exports.tea_delete_get = (req, res, next) => {
+  Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
+    if(err) {
+      return next(err);
+    }
+    if (tea === null) {
+      const err = new Error ("Tea does not exist or has already been deleted!");
+      err.status = 404;
+      return next(err);
+    }
+    res.render("tea_delete", {title: "Delete this tea", tea}) 
+  })
+};
+
+exports.tea_delete_post = (req, res, next) => {
+  Tea.findByIdAndRemove(req.body.teadeleteid, (err) => {
+    if(err) {
+      return next(err);
+    }
+    res.redirect("/teas");
+  })
+};
+
+exports.tea_update_get = (req, res, next) => {
+  Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
+    if(err) {
+      return next(err);
+    }
+    if (tea === null) {
+      const err = new Error ("Tea does not exist or has been deleted!");
+      err.status = 404;
+      return next(err);
+    }
+    res.render("tea_update", {title: "Update this tea", tea});
+  })
+};
+
+exports.tea_update_post = [
+  upload.single('teaimg'),
+  body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
+  body("type"),
+  body("brand").trim().isLength({min: 1}).escape(),
+  body("rating"),
+  body("notes").trim().escape(),
+  (req, res, next) => {
+    const uploadedImage = {
+      teaImage: req.file ? {
+        data: fs.readFileSync(path.join(__dirname + "/../public/images/" + req.file.filename)),
+      contentType: "image/png"
+      } : ""
+    }
+
+    const errors = validationResult(req);
+
+    const tea = new Tea({
+      tea_name: req.body.teaname,
+      type: req.body.type,
+      brand: req.body.brand,
+      rating: req.body.rating,
+      notes: req.body.notes,
+      created_by: req.user._id,
+      updated_on: new Date(),
+      img: uploadedImage.teaImage,
+      _id: req.params.id,
+    });
+    console.log(tea);
+    Tea.findByIdAndUpdate(req.params.id, tea, {}, (err, updatedtea) => {
       if(err) {
         return next(err);
       }
-      if (tea === null) {
-        const err = new Error ("Tea does not exist or has already been deleted!");
-        err.status = 404;
-        return next(err);
-      }
-      res.render("tea_delete", {title: "Delete this tea", tea}) 
-    })
-  };
-  
-  exports.tea_delete_post = (req, res, next) => {
-    Tea.findByIdAndRemove(req.body.teadeleteid, (err) => {
-      if(err) {
-        return next(err);
-      }
-      res.redirect("/teas");
-    })
-  };
-  
-  exports.tea_update_get = (req, res, next) => {
-    Tea.findById(req.params.id).populate("created_by").exec((err, tea) => {
-      if(err) {
-        return next(err);
-      }
-      if (tea === null) {
-        const err = new Error ("Tea does not exist or has been deleted!");
-        err.status = 404;
-        return next(err);
-      }
-      res.render("tea_update", {title: "Update this tea", tea});
-    })
-  };
-  
-  exports.tea_update_post = [
-    upload.single('teaimg'),
-    body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
-    body("type"),
-    body("brand").trim().isLength({min: 1}).escape(),
-    body("rating"),
-    body("notes").trim().escape(),
-    (req, res, next) => {
-      const uploadedImage = {
-        teaImage: req.file ? {
-          data: fs.readFileSync(path.join(__dirname + "/../public/images/" + req.file.filename)),
-        contentType: "image/png"
-        } : ""
-      }
-  
-      const errors = validationResult(req);
-  
-      const tea = new Tea({
-        tea_name: req.body.teaname,
-        type: req.body.type,
-        brand: req.body.brand,
-        rating: req.body.rating,
-        notes: req.body.notes,
-        created_by: req.user._id,
-        updated_on: new Date(),
-        img: uploadedImage.teaImage,
-        _id: req.params.id,
-      });
-      console.log(tea);
-      Tea.findByIdAndUpdate(req.params.id, tea, {}, (err, updatedtea) => {
-        if(err) {
-          return next(err);
-        }
-      })      
-      res.redirect("/teas/tealist");
-      }
-  ];
-
-  exports.tea_recommend_get = (req, res, next) => {
-    async.parallel(
-      {
-        tea_info(callback) {
-          Tea.findById(req.params.id).populate("created_by").exec(callback);
-        },
-        
-        user_info(callback) {
-          User.find({}, "username").sort({username : 1}).exec(callback);
-        }
-      }, 
-        (err, results) => {
-          if (err) {
-            return next(err);
-          }
-        res.render("recommend_form", {title: "Recommend this tea to a friend!", user_list: results.user_info, recommended_tea: results.tea_info});
-      });
-    };
-
-    //TODO: Update so that the message that comes with the recommendation is stored in the user db
-  exports.tea_recommend_post = [
-    body("recommendedtea"),
-    body("recommender"),
-    body("user"),
-    body("recmessage"),
-    (req, res, next) => {
-      const errors = validationResult(req);
-
-      User.findById(req.body.user).exec((err, friend) => {
-        if(err) {
-          return next(err);
-        }
-        let tea_obj = {
-          tea_rec: req.body.recommendedtea,
-          recommended_by: req.body.recommender,
-          message: req.body.recmessage,
-        };
-        friend.recommended_teas.push(tea_obj);
-        // friend.recommended_teas.push(req.body.recommendedtea);
-        // friend.recommended_by.push(req.body.recommender);
-
-        friend.save((err) => {
-          if(err) {
-            return next(err);
-          }
-        })
-    })
-
-      res.redirect("/teas");
+    })      
+    res.redirect("/teas/tealist");
     }
 ];
-//ASYNC SERIES? Add teas/teaid/save to routes
-//line 298 saved_teas is undefined for some reason
-  exports.tea_save_post = (req, res, next) => {
 
-    Tea.findById(req.params.id).exec((err, tea) => {
+exports.tea_recommend_get = (req, res, next) => {
+  async.parallel(
+    {
+      tea_info(callback) {
+        Tea.findById(req.params.id).populate("created_by").exec(callback);
+      },
+      
+      user_info(callback) {
+        User.find({}, "username").sort({username : 1}).exec(callback);
+      }
+    }, 
+      (err, results) => {
+        if (err) {
+          return next(err);
+        }
+      res.render("recommend_form", {title: "Recommend this tea to a friend!", user_list: results.user_info, recommended_tea: results.tea_info});
+    });
+  };
+
+exports.tea_recommend_post = [
+  body("recommendedtea"),
+  body("recommender"),
+  body("user"),
+  body("recmessage"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    User.findById(req.body.user).exec((err, friend) => {
       if(err) {
         return next(err);
       }
-      if (tea === null) {
-        const err = new Error ("Tea does not exist!");
-        err.status = 404;
-        return next(err);
-      }
-      User.findById(req.body.user).exec((err, self) => {
+      let tea_obj = {
+        tea_rec: req.body.recommendedtea,
+        recommended_by: req.body.recommender,
+        message: req.body.recmessage,
+      };
+      friend.recommended_teas.push(tea_obj);
+
+      friend.save((err) => {
         if(err) {
           return next(err);
         }
-        self.saved_teas.push(tea);
-
-        friend.save((err) => {
-          if(err) {
-            return next(err);
-          }
-        })
-        
       })
-      res.redirect("/teas");
-    })
+  })
+
+    res.redirect("/teas");
+  }
+];
+//ASYNC SERIES? Add teas/teaid/save to routes
+//line 298 saved_teas is undefined because user is not in req.body
+exports.tea_save_post = (req, res, next) => {
+  Tea.findById(req.params.id).exec((err, tea) => {
+    if(err) {
+      return next(err);
     }
+    if (tea === null) {
+      const err = new Error ("Tea does not exist!");
+      err.status = 404;
+      return next(err);
+    }
+    User.find({username: req.user.username}).exec((err, self) => {
+      if(err) {
+        return next(err);
+      }
+      self[0].saved_teas.push(tea);
+
+      self[0].save((err) => {
+        if(err) {
+          return next(err);
+        }
+      })
+      
+    })
+    res.redirect("/teas");
+  })
+  }
     
+exports.tea_favorite_post = (req, res, next) => {
+  Tea.findById(req.params.id).exec((err, tea) => {
+    if(err) {
+      return next(err);
+    }
+    if (tea === null) {
+      const err = new Error ("Tea does not exist!");
+      err.status = 404;
+      return next(err);
+    }
+    User.find({username: req.user.username}).exec((err, self) => {
+      if(err) {
+        return next(err);
+      }
+      self[0].favorite_teas.push(tea);
+
+      self[0].save((err) => {
+        if(err) {
+          return next(err);
+        }
+      })
+      
+    })
+    res.redirect("/teas");
+  })
+  };

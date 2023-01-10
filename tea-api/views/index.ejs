@@ -46,7 +46,7 @@
       <p>You have no recommendations currently.</p>
     <% } %>
     </div>
-    <div class="friendacivity">
+    <div class="friendactivitydiv">
       <h3>Teas recently added by friends: </h3>
       <ul class="activityfeed">
         <% for(let i = 0; i < recent_tea_list.length; i++) { %>
@@ -58,6 +58,39 @@
         <% } %>
       </ul>
     </div>
+    <% if(saved_teas_list) { %>
+    <div class="tealist">
+      <h2>Saved Teas</h2>
+      <% console.log(saved_teas_list) %>
+        <ul>
+            <% for(let i = 0; i < saved_teas_list[0].saved_teas.length; i ++) { %>
+              <div class="teacard"> 
+                <li> <a href='<%= saved_teas_list[0].saved_teas[i].url %>'> <%= saved_teas_list[0].saved_teas[i].tea_name %> </a> </a> 
+                <li>Type: <%= saved_teas_list[0].saved_teas[i].type %> </li> 
+                <li>Brand: <%= saved_teas_list[0].saved_teas[i].brand %>  </li> 
+                <li>Rating(out of 10): <%= saved_teas_list[0].saved_teas[i].rating %> </li> 
+                <li>Notes: <%= saved_teas_list[0].saved_teas[i].notes %> </li> 
+              </div>
+            <% } %>
+        </ul>
+    </div>
+    <% } %>
+    <% if(favorite_teas_list) { %>
+      <div class="tealist">
+        <h2>Favorite Teas</h2>
+          <ul>
+              <% for(let i = 0; i < favorite_teas_list[0].favorite_teas.length; i ++) { %>
+                <div class="teacard"> 
+                  <li> <a href='<%= favorite_teas_list[0].favorite_teas[i].url %>'> <%= favorite_teas_list[0].favorite_teas[i].tea_name %> </a> </a> 
+                  <li>Type: <%= favorite_teas_list[0].favorite_teas[i].type %> </li> 
+                  <li>Brand: <%= favorite_teas_list[0].favorite_teas[i].brand %>  </li> 
+                  <li>Rating(out of 10): <%= favorite_teas_list[0].favorite_teas[i].rating %> </li> 
+                  <li>Notes: <%= favorite_teas_list[0].favorite_teas[i].notes %> </li> 
+                </div>
+              <% } %>
+          </ul>
+      </div>
+      <% } %>
       <div class="tealist">
         <h2>Your Teas</h2>
           <ul>

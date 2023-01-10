@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(48, 161, 48);
+    background: honeydew;
 }
 
 a {
@@ -42,8 +42,9 @@ img {
 
 .teacard {
     display: flex;
+    background-color: peachpuff;
     flex-direction: column;
-    border: solid 3px blue;
+    border: solid 3px black;
     margin: 10px;
     width: 600px;
 }
