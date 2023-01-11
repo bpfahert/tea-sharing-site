@@ -24,6 +24,23 @@
     <div class="userinfodiv">
         <p>Username: <%= user.username %></p>
         <p>Favorite Tea: <%= user.favorite_tea_type %></p>
+        <% if(user.favorite_teas[0]) { %>
+          <div class="tealist">
+            <h2>Favorite Teas</h2>
+            <% console.log(user.favorite_teas) %>
+              <ul>
+                  <% for(let i = 0; i < user.favorite_teas.length; i++) { %>
+                    <div class="teacard"> 
+                      <li> <a href='<%= user.favorite_teas[i].url %>'> <%= user.favorite_teas[i].tea_name %> </a> </a> 
+                      <li>Type: <%= user.favorite_teas[i].type %> </li> 
+                      <li>Brand: <%= user.favorite_teas[i].brand %>  </li> 
+                      <li>Rating(out of 10): <%= user.favorite_teas[i].rating %> </li> 
+                      <li>Notes: <%= user.favorite_teas[i].notes %> </li>
+                    </div>
+                  <% } %>
+              </ul>
+          </div>
+          <% } %>
         <div class="useraddedteas">
           <h3>Teas Added:</h3> 
           <ul>

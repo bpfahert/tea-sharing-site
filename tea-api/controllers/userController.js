@@ -16,6 +16,8 @@ exports.user_list = (req, res) => {
 exports.user_info = (req, res, next) => {
   User.findById(req.params.id)
   .populate("username")
+  .populate("favorite_teas")
+  .populate("teas_added")
   .exec((err, user) => {
     if (err) {
       return next(err)

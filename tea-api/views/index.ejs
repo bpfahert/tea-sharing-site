@@ -34,11 +34,11 @@
         <ul>
           <% for(let i = 0; i < teas_recommended_list[0].recommended_teas.length; i ++) { %>
             <div class="teacard"> 
-              <li> <a href='<%= teas_recommended_list[0].recommended_teas[i].tea_rec.url %>'> <%= teas_recommended_list[0].recommended_teas[i].tea_rec.tea_name %> </a> </li>
+              <li> <a href="<%= teas_recommended_list[0].recommended_teas[i].tea_rec.url %>"> <%= teas_recommended_list[0].recommended_teas[i].tea_rec.tea_name %> </a> </li>
               <li>Type: <%= teas_recommended_list[0].recommended_teas[i].tea_rec.type %> </li> 
               <li>Recommended By: <a href="<%= teas_recommended_list[0].recommended_teas[i].recommended_by.url%>"> <%= teas_recommended_list[0].recommended_teas[i].recommended_by.username %> </a></li> 
               <li>Message: "<%= teas_recommended_list[0].recommended_teas[i].message %>"</li>
-              <button type="button" class="deletebutton">Delete this recommendation</li>
+              <li><a href="<%= teas_recommended_list[0].recommended_teas[i].tea_rec.url%>/deleterecommendation %>">Delete this recommendation</a></li>
             </div>
           <% } %>
         </ul>
@@ -70,6 +70,7 @@
                 <li>Brand: <%= saved_teas_list[0].saved_teas[i].brand %>  </li> 
                 <li>Rating(out of 10): <%= saved_teas_list[0].saved_teas[i].rating %> </li> 
                 <li>Notes: <%= saved_teas_list[0].saved_teas[i].notes %> </li> 
+                <li><a href="<%= saved_teas_list[0].saved_teas[i].url%>/deletesaved %>">Remove From Saved Teas</a></li> 
               </div>
             <% } %>
         </ul>
@@ -85,7 +86,8 @@
                   <li>Type: <%= favorite_teas_list[0].favorite_teas[i].type %> </li> 
                   <li>Brand: <%= favorite_teas_list[0].favorite_teas[i].brand %>  </li> 
                   <li>Rating(out of 10): <%= favorite_teas_list[0].favorite_teas[i].rating %> </li> 
-                  <li>Notes: <%= favorite_teas_list[0].favorite_teas[i].notes %> </li> 
+                  <li>Notes: <%= favorite_teas_list[0].favorite_teas[i].notes %> </li>
+                  <li><a href="<%= favorite_teas_list[0].favorite_teas[i].url%>/deletefavorite %>">Remove From Favorites</a></li> 
                 </div>
               <% } %>
           </ul>

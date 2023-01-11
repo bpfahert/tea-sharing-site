@@ -39,7 +39,6 @@ exports.index = (req, res, next) => {
       favorite_teas(callback) {
         User.find({username: req.user.username}).populate("favorite_teas").exec(callback);
       },
-
     },
     (err, results) => {
       if(err) {
@@ -161,7 +160,6 @@ exports.tea_create_post = [
         err.status = 404;
         return next(err);
       }
-      //Changed to tea._id to store only id reference instead of full object
       creator.teas_added.push(tea._id);
       creator.save((err) => {
         if(err) {
@@ -303,9 +301,17 @@ exports.tea_recommend_post = [
     res.redirect("/teas");
   }
 ];
-//ASYNC SERIES? Add teas/teaid/save to routes
-//line 298 saved_teas is undefined because user is not in req.body
-exports.tea_save_post = (req, res, next) => {
+
+exports.tea_recommend_delete = (req, res, next) => {
+  User.findOneAndUpdate({username: req.user.username}, {$pull : {recommended_teas: { tea_rec: req.params.id}}}).exec((err, self) => {
+    if(err) {
+      return next(err);
+    }
+    res.redirect("/teas");
+  })
+};
+
+exports.tea_save_get = (req, res, next) => {
   Tea.findById(req.params.id).exec((err, tea) => {
     if(err) {
       return next(err);
@@ -330,9 +336,18 @@ exports.tea_save_post = (req, res, next) => {
     })
     res.redirect("/teas");
   })
-  }
+  };
+
+  exports.tea_saved_delete = (req, res, next) => {
+    User.findOneAndUpdate({username: req.user.username}, {$pull : {saved_teas: req.params.id}}).exec((err, self) => {
+      if(err) {
+        return next(err);
+      }
+      res.redirect("/teas");
+    })
+  };
     
-exports.tea_favorite_post = (req, res, next) => {
+exports.tea_favorite_get = (req, res, next) => {
   Tea.findById(req.params.id).exec((err, tea) => {
     if(err) {
       return next(err);
@@ -357,4 +372,13 @@ exports.tea_favorite_post = (req, res, next) => {
     })
     res.redirect("/teas");
   })
+  };
+
+  exports.tea_favorite_delete = (req, res, next) => {
+    User.findOneAndUpdate({username: req.user.username}, {$pull : {favorite_teas: req.params.id}}).exec((err, self) => {
+      if(err) {
+        return next(err);
+      }
+      res.redirect("/teas");
+    })
   };

@@ -21,9 +21,15 @@ router.get('/:id/recommend', tea_controller.tea_recommend_get);
 
 router.post('/:id/recommend', tea_controller.tea_recommend_post);
 
-router.get('/:id/save', tea_controller.tea_save_post);
+router.get('/:id/save', tea_controller.tea_save_get);
 
-router.get('/:id/favorite', tea_controller.tea_favorite_post);
+router.get('/:id/favorite', tea_controller.tea_favorite_get);
+
+router.get('/:id/deleterecommendation', tea_controller.tea_recommend_delete);
+
+router.get('/:id/deletesaved', tea_controller.tea_saved_delete);
+
+router.get('/:id/deletefavorite', tea_controller.tea_favorite_delete);
 
 router.get('/tealist', tea_controller.tea_list);
 

@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     favorite_tea_type: {type: String},
     account_created: {type: Date},
     favorite_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
-    teas_added: {type: Array},
+    teas_added: [{type: Schema.Types.ObjectId, ref: "Tea"}],
     recommended_teas: [{
         tea_rec: {type: Schema.Types.ObjectId, ref:"Tea"},
         recommended_by: {type: Schema.Types.ObjectId, ref: "User"},
