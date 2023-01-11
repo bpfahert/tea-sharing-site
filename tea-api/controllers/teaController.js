@@ -168,7 +168,6 @@ exports.tea_create_post = [
       })
     })
 
-    //needs to be async?
     tea.save((err) => {
       if(err) {
         return next(err);

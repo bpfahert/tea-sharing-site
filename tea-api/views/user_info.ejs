@@ -27,7 +27,6 @@
         <% if(user.favorite_teas[0]) { %>
           <div class="tealist">
             <h2>Favorite Teas</h2>
-            <% console.log(user.favorite_teas) %>
               <ul>
                   <% for(let i = 0; i < user.favorite_teas.length; i++) { %>
                     <div class="teacard"> 
@@ -41,6 +40,7 @@
               </ul>
           </div>
           <% } %>
+          <% if(user.teas_added) { %>
         <div class="useraddedteas">
           <h3>Teas Added:</h3> 
           <ul>
@@ -52,6 +52,7 @@
                   Notes: <%= user.teas_added[i].notes %> 
                   Added on: <%= user.teas_added[i].created_on %></li>
             <% } %>
+          <% } %>
           </ul>
         </div>
     </div>

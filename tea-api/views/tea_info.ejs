@@ -48,6 +48,8 @@
     <a href="/teas/<%= tea_id %>/recommend">Recommend this tea to a user</a>
     <% if (currentUser && currentUser.username === tea.created_by.username) { %>
       <p></p>
+      <a href="<%= tea.url %>/update">Update this tea</a>
+      <p></p>
       <a href="<%= tea.url %>/delete">Delete this tea</a>
     <% } %>
   </body>
