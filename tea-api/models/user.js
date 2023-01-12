@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: {type: String, required: true, minLength: 3, maxLength: 15},
     password: {type: String, required: true},
+    about: {type: String},
     favorite_tea_type: {type: String},
     account_created: {type: Date},
     favorite_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],

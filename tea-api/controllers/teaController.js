@@ -125,10 +125,10 @@ exports.tea_create_get = (req, res, next) => {
 exports.tea_create_post = [
   upload.single('teaimg'),
   body("tea_name").trim().isLength({min: 2}).escape().withMessage("Please enter a tea name"),
+  body("brand").trim().isLength({min: 2}),
   body("type"),
-  body("brand").trim().isLength({min: 1}).escape(),
   body("rating"),
-  body("notes").trim().escape(),
+  body("notes").trim(),
   (req, res, next) => {
     const uploadedImage = {
       teaImage: req.file ? {
@@ -149,7 +149,7 @@ exports.tea_create_post = [
       created_by: req.user._id,
       img: uploadedImage.teaImage,
     });
-
+    console.log(tea);
     User.findById(tea.created_by)
     .exec((err, creator) => {
       if (err) {

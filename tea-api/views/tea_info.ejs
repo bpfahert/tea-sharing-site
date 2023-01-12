@@ -28,11 +28,11 @@
       <h1>Log in to your account!</h1>
     <% } %>
     <p>Tea name: <%= title %></p>
-    Type: <%= tea.type %>
-    <p><%= tea.brand %></p>
-    <p><%= tea.rating %></p>
+    <p>Type: <%= tea.type %> </p>
+    <p>Brand: <%= tea.brand %></p>
+    <p>Rating: <%= tea.rating %></p>
     <%= tea.notes %>
-    <p> <%= tea.created_on %></p>
+    <p>Added on  <%= tea.created_on %></p>
     <p>Added by: <a href="<%= user_url %>"> <%= tea.created_by.username %> </a></p>
     <% if (tea.img.data) { %>
       <img src="data:image/<%= tea.img.contentType%>;base64,

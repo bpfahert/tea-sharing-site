@@ -28,6 +28,18 @@
     <% } else { %>
       <h1>Log in to your account!</h1>
     <% } %>
+    <div class="friendactivitydiv">
+      <h3>Teas recently added by friends: </h3>
+      <ul class="activityfeed">
+        <% for(let i = 0; i < recent_tea_list.length; i++) { %>
+          <% if(recent_tea_list[i].type === "Herbal" || recent_tea_list[i].type === "Oolong" ) { %>
+            <li class="activityentry"><a href="<%= recent_tea_list[i].created_by.url %>" ><%= recent_tea_list[i].created_by.username %></a> added an <%= recent_tea_list[i].type %> tea called <a href="<%= recent_tea_list[i].url %>"" ><%= recent_tea_list[i].tea_name %></a></li>
+          <% } else { %>
+            <li class="activityentry"><a href="<%= recent_tea_list[i].created_by.url %>" ><%= recent_tea_list[i].created_by.username %></a> added a <%= recent_tea_list[i].type %> tea called <a href="<%= recent_tea_list[i].url %>"" ><%= recent_tea_list[i].tea_name %></a></li>
+          <% } %>
+        <% } %>
+      </ul>
+    </div>
     <div class="recommendedteas">
       <h2>Recommended Teas</h2>
       <% if(teas_recommended_list[0].recommended_teas[0]) { %>
@@ -45,18 +57,6 @@
     <% } else { %>
       <p>You have no recommendations currently.</p>
     <% } %>
-    </div>
-    <div class="friendactivitydiv">
-      <h3>Teas recently added by friends: </h3>
-      <ul class="activityfeed">
-        <% for(let i = 0; i < recent_tea_list.length; i++) { %>
-          <% if(recent_tea_list[i].type === "Herbal" || recent_tea_list[i].type === "Oolong" ) { %>
-            <li class="activityentry"><a href="<%= recent_tea_list[i].created_by.url %>" ><%= recent_tea_list[i].created_by.username %></a> added an <%= recent_tea_list[i].type %> tea called <a href="<%= recent_tea_list[i].url %>"" ><%= recent_tea_list[i].tea_name %></a></li>
-          <% } else { %>
-            <li class="activityentry"><a href="<%= recent_tea_list[i].created_by.url %>" ><%= recent_tea_list[i].created_by.username %></a> added a <%= recent_tea_list[i].type %> tea called <a href="<%= recent_tea_list[i].url %>"" ><%= recent_tea_list[i].tea_name %></a></li>
-          <% } %>
-        <% } %>
-      </ul>
     </div>
     <% if(saved_teas_list) { %>
     <div class="tealist">
