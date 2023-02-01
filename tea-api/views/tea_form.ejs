@@ -2,68 +2,96 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Add a new tea!</p>
-    <div class="navbar">
+  <body style="background-color: peachpuff">
+    <div class="container-fluid">
+      <h1><%= title %></h1>
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color:turquoise">
+        <div class="collapse navbar-collapse" id="navbarsupportedcontent">
+          <ul class="navbar-nav">
+        <% if (currentUser) { %>
+            <li class="nav-item active"><a class="nav-link" href="/teas"><%= currentUser.username %></a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/user/create">Sign up</a></li>
+        <% } %>
+        <li class="nav-item"><a class="nav-link" href="/teas/tealist">Teas</a></li>
+        <li class="nav-item"><a class="nav-link" href="/teas/create">Add New Tea</a></li>
+        <% if (currentUser) { %>
+          <li class="nav-item"><a class="nav-link" href="<%= currentUser.url %>">Profile</a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/user/login">Log in</a></li>
+        <% } %>
+        <li class="nav-item"><a class="nav-link" href="/user/userlist">Friends</a></li>
+          </ul>
+        </div>
+      </nav>
       <% if (currentUser) { %>
-        <a href="/teas"><%= currentUser.username %></a>
-      <% } else { %>
-        <a href="/user/create">Sign up</a>
-      <% } %>
-      <a href="/teas/tealist">Teas</a>
-      <a href="/teas/create">Add New Tea</a>
-      <% if (currentUser) { %>
-        <a href="<%= currentUser.url %>">Profile</a>
-      <% } else { %>
-        <a href="/user/login">Log in</a>
-      <% } %>
-      <a href="/user/userlist">Friends</a>
-    </div>
-    <% if (currentUser) { %>
-      <h3>Hello <%= currentUser.username %></h3>
-      <a href="/logout">Log out</a>
-      <div class="formdiv">
-          <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
-              <h2>Add Tea</h2>
-              <label htmlFor="teaname">Tea Name</label>
-              <input type="text" id="teaname" name="teaname" placeholder="Tea name" required="required" maxlength="50"></input>
-              <label htmlFor="type">Type of Tea</label>
-              <select id="type" name="type">
-                <option value="Green">Green</option>
-                <option value="Black">Black</option>
-                <option value="Oolong">Oolong</option>
-                <option value="Herbal">Herbal</option>
-                <option value="White">White</option>
-              </select>
-              <label htmlFor="brand">Tea Brand</label>
-              <input type="text" id="brand" name="brand" maxlength="30" placeholder="Brand"></input>
-              <label htmlFor="rating">Tea Rating</label>
-              <select id="rating" name="rating">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select> 
-              <label htmlFor="Notes">Notes on Tea</label>
-              <input type="text" id="notes" name="notes" maxlength="500"></input>
+        <h3>Hello <%= currentUser.username %></h3>
+        <a href="/logout">Log out</a>
+        <p></p>
+        <div class="formdiv border border-dark w-50">
+            <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
+              <div class="row">
+                <div class="form-group col-md-2 form-floating mb-2">
+                  <input type="text" id="teaname" name="teaname" placeholder="Tea name" required="required" maxlength="50" class="form-control"></input>
+                  <label for="teaname" class="form-label">Tea Name</label>
+                </div>
+                <div class="form-group col-md-2 form-floating mb-2">
+                  <input type="text" class="form-control" id="brand" name="brand" maxlength="30" placeholder="Brand"></input>
+                  <label for="brand" class="form-label">Tea Brand</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-2 form-floating mb-2">
+                  <select id="type" class="form-select" name="type">
+                    <option value="Green">Green</option>
+                    <option value="Black">Black</option>
+                    <option value="Oolong">Oolong</option>
+                    <option value="Herbal">Herbal</option>
+                    <option value="White">White</option>
+                  </select>
+                  <label for="type" class="form-label">Type of Tea</label>
+                </div>
+                <div class="form-group col-md-2 mb-2">
+                  <div class="input-group">
+                    <div class="input-group-text">Rating:</div> 
+                    <select id="rating" class="form-select" name="rating">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
               <p></p>
-              <input type="file" name="teaimg">Picture</input>
+              <div class="row">
+                <div class="col-lg-8 form-floating">
+                  <input type="text" id="notes" name="notes" class="form-control input-lg" maxlength="500"></input>
+                  <label for="Notes" class="form-label">Notes on Tea</label>
+                </div>
+              </div>
               <p></p>
-              <button type="submit">Submit</button>
-          </form>
-    </div>
-    <% } else { %>
-      <h1>Please log in to add a new tea!</h1>
-    <% } %>
+                <div class="mb-3 col-md-4">
+                  <label for="teaimg" class="form-label">Upload Picture</label>
+                  <input type="file" class="form-control" id="teaimg" name="teaimg"></input>
+                </div>
+                <p></p>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+      <% } else { %>
+        <h3>Please log in to add a new tea!</h3>
+      <% } %>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </body>
 </html>
