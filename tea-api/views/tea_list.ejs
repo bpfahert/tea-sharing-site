@@ -2,45 +2,57 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <div class="navbar">
+  <body style="background-color: honeydew">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:turquoise">
+      <div class="collapse navbar-collapse" id="navbarsupportedcontent">
+        <ul class="navbar-nav">
       <% if (currentUser) { %>
-        <a href="/teas"><%= currentUser.username %></a>
+          <li class="nav-item active"><a class="nav-link" href="/teas"><%= currentUser.username %></a></li>
       <% } else { %>
-        <a href="/user/create">Sign up</a>
+        <li class="nav-item"><a class="nav-link" href="/user/create">Sign up</a></li>
       <% } %>
-      <a href="/teas/tealist">Teas</a>
-      <a href="/teas/create">Add New Tea</a>
+      <li class="nav-item"><a class="nav-link" href="/teas/tealist">Teas</a></li>
+      <li class="nav-item"><a class="nav-link" href="/teas/create">Add New Tea</a></li>
       <% if (currentUser) { %>
-        <a href="<%= currentUser.url %>">Profile</a>
+        <li class="nav-item"><a class="nav-link" href="<%= currentUser.url %>">Profile</a></li>
       <% } else { %>
-        <a href="/user/login">Log in</a>
+        <li class="nav-item"><a class="nav-link" href="/user/login">Log in</a></li>
       <% } %>
-      <a href="/user/userlist">Friends</a>
-    </div>
+      <li class="nav-item"><a class="nav-link" href="/user/userlist">Friends</a></li>
+        </ul>
+      </div>
+    </nav>
     <% if (currentUser) { %>
       <h3>Hello <%= currentUser.username %></h3>
       <a href="/logout">Log out</a>
     <% } else { %>
       <h1>Log in to your account!</h1>
     <% } %>
-    <div class="newtealist">
-      <h2>Recently Added Teas</h2>
-      <ul>
-        <% for(let i = 0; i < new_tea_list.length; i++) { %>
-            <div class="teacard"> 
-              <li> <a href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a> 
-              <li>Type: <%= new_tea_list[i].type %> </li> 
-              <li>Brand: <%= new_tea_list[i].brand %> </li> 
-              <li>Rating(out of 10): <%= new_tea_list[i].rating %> </li> 
-              <li>Notes: <%= new_tea_list[i].notes %> </li> 
-              <li>Added on: <%= new_tea_list[i].created_on %> </li>
-            </div>
-        <% } %>
-      </ul>
+    <div class="container-fluid">
+      <h2 class="text-center mb-3">Recently Added Teas</h2>
+        <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+          <% for(let i = 0; i < new_tea_list.length; i++) { %>
+              <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+                <% if (new_tea_list[i].img.data) { %>
+                  <img class="card-img-top" src="data:image/<%= new_tea_list[i].img.contentType%>;base64,
+                  <%= new_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+                <% } else { %>
+                  <img class="card-img-top" src="" alt="tea-image">
+                <% } %>
+                <div class="card-body">
+                  <li><h5><a style="text-decoration:none;color:black;" href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a></h5></li> 
+                  <li>Type: <%= new_tea_list[i].type %> </li> 
+                  <li>Brand: <%= new_tea_list[i].brand %> </li> 
+                  <li>Rating(out of 10): <%= new_tea_list[i].rating %> </li> 
+                  <li>Notes: <%= new_tea_list[i].notes %> </li> 
+                  <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= new_tea_list[i].created_by.url %>"> <%= new_tea_list[i].created_by.username %> </a></li>
+                </div>
+              </div>
+          <% } %>
+        </ul>
+      </div>
     </div>
     <div class="greenteas">
       <h3>Green Teas</h3>
@@ -114,5 +126,6 @@
             <% } %>
         </ul>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </body>
 </html>

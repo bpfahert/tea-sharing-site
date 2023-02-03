@@ -63,7 +63,7 @@ exports.tea_list = (req, res, next) => {
       },
 
       recently_added_teas(callback) {
-        Tea.find({}, "created_on tea_name type brand rating notes").sort({created_on: -1}).limit(5).exec(callback);
+        Tea.find({}, "created_on created_by tea_name type brand rating notes img").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
       },
 
       green_teas(callback) {
@@ -149,7 +149,6 @@ exports.tea_create_post = [
       created_by: req.user._id,
       img: uploadedImage.teaImage,
     });
-    console.log(tea);
     User.findById(tea.created_by)
     .exec((err, creator) => {
       if (err) {
@@ -242,7 +241,6 @@ exports.tea_update_post = [
       img: uploadedImage.teaImage,
       _id: req.params.id,
     });
-    console.log(tea);
     Tea.findByIdAndUpdate(req.params.id, tea, {}, (err, updatedtea) => {
       if(err) {
         return next(err);
