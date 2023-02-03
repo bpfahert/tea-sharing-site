@@ -30,7 +30,7 @@
         <h3>Hello <%= currentUser.username %></h3>
         <a href="/logout">Log out</a>
         <p></p>
-        <div class="formdiv border border-dark w-50">
+        <div class="formdiv border border-dark">
             <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
               <div class="row">
                 <div class="form-group col-md-2 form-floating mb-2">
@@ -74,7 +74,7 @@
               </div>
               <p></p>
               <div class="row">
-                <div class="col-lg-8 form-floating">
+                <div class="col-lg-6 form-floating">
                   <input type="text" id="notes" name="notes" class="form-control input-lg" maxlength="500"></input>
                   <label for="Notes" class="form-label">Notes on Tea</label>
                 </div>
@@ -85,7 +85,7 @@
                   <input type="file" class="form-control" id="teaimg" name="teaimg"></input>
                 </div>
                 <p></p>
-                <button type="submit">Submit</button>
+                <button class="btn btn-info" type="submit">Submit</button>
             </form>
         </div>
       <% } else { %>
