@@ -95,26 +95,23 @@ exports.tea_list = (req, res, next) => {
 };
 
 exports.tea_info = (req, res, next) => {
-
-  Tea.findById(req.params.id)
-  .populate("tea_name")
-  .populate("created_by")
-  .exec((err, tea) => {
-    if (err) {
-      return next(err)
-    }
-    if (tea === null) {
-      const err = new Error ("Tea does not exist!");
-      err.status = 404;
-      return next(err);
-    }
-    res.render("tea_info", {
-      title: `${tea.tea_name}`,
-      tea,
-      user_url : tea.created_by.url,
-      tea_id: req.params.id
-    })
-  })
+  async.parallel(
+    {
+      tea_details(callback) {
+        Tea.findById(req.params.id).populate("tea_name").populate("created_by").exec(callback);
+      },
+      
+      list_users(callback) {
+        User.find({}, "username").sort({username : 1}).exec(callback);
+      }
+    },
+      (err, results) => {
+        if (err) {
+          return next(err);
+        }
+        res.render("tea_info", {title: `${results.tea_details.tea_name}`, user_url: results.tea_details.created_by.url, tea_id: req.params.id, tea: results.tea_details, user_list: results.list_users})
+      }
+    )
 };
 
 exports.tea_create_get = (req, res, next) => {
@@ -276,7 +273,7 @@ exports.tea_recommend_post = [
   body("recmessage"),
   (req, res, next) => {
     const errors = validationResult(req);
-
+    console.log(req.body);
     User.findById(req.body.user).exec((err, friend) => {
       if(err) {
         return next(err);
@@ -286,6 +283,7 @@ exports.tea_recommend_post = [
         recommended_by: req.body.recommender,
         message: req.body.recmessage,
       };
+      console.log(tea_obj);
       friend.recommended_teas.push(tea_obj);
 
       friend.save((err) => {
@@ -294,8 +292,7 @@ exports.tea_recommend_post = [
         }
       })
   })
-
-    res.redirect("/teas");
+  res.redirect(`/teas/${req.params.id}`)
   }
 ];
 

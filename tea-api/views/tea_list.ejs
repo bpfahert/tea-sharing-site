@@ -52,7 +52,6 @@
             </div>
           </div>
         </div>
-        <li class="nav-item"><a class="nav-link" href="/user/login">Log in</a></li>
       <% } %>
       <li class="nav-item"><a class="nav-link" href="/user/userlist">Friends</a></li>
         </ul>
@@ -61,8 +60,6 @@
     <% if (currentUser) { %>
       <h3>Hello <%= currentUser.username %></h3>
       <a href="/logout">Log out</a>
-    <% } else { %>
-      <h1>Log in to your account!</h1>
     <% } %>
     <div class="container-fluid">
       <h2 class="text-center mb-3">Recently Added Teas</h2>

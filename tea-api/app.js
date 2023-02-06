@@ -92,7 +92,6 @@ app.use(function (req, res, next) {
 }); 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/testapi', testAPIRouter);
 app.use('/teas', teasRouter);
 app.use('/user', userRouter);
@@ -100,7 +99,7 @@ app.use('/user', userRouter);
 app.post(
   "/userlogin",
   passport.authenticate("local", {
-    successRedirect: "/teas/tealist",
+    successRedirect: "/teas",
     failureRedirect: "/user/login"
   })
   );
@@ -110,7 +109,7 @@ app.get("/logout", (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/user/login");
+    res.redirect("/teas/tealist");
   });
 });
 
