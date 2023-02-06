@@ -67,23 +67,23 @@ exports.tea_list = (req, res, next) => {
       },
 
       green_teas(callback) {
-        Tea.find({ type: "Green"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+        Tea.find({ type: "Green"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
       },
 
       black_teas(callback) {
-        Tea.find({ type: "Black"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+        Tea.find({ type: "Black"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
       },
 
       oolong_teas(callback) {
-        Tea.find({ type: "Oolong"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+        Tea.find({ type: "Oolong"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
       },
 
       herbal_teas(callback) {
-        Tea.find({ type: "Herbal"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+        Tea.find({ type: "Herbal"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
       },
 
       white_teas(callback) {
-        Tea.find({ type: "White"}, "created_on tea_name type brand rating notes").sort({created_on: -1}).exec(callback);
+        Tea.find({ type: "White"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
       }
     },
       (err, results) => {

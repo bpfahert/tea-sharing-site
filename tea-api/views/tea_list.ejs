@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   </head>
   <body style="background-color: honeydew">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:turquoise">
+    <nav class="navbar navbar-expand-sm navbar-light" style="background-color:turquoise">
       <div class="collapse navbar-collapse" id="navbarsupportedcontent">
         <ul class="navbar-nav">
       <% if (currentUser) { %>
@@ -63,99 +63,166 @@
     <% } %>
     <div class="container-fluid">
       <h2 class="text-center mb-3">Recently Added Teas</h2>
-        <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
-          <% for(let i = 0; i < new_tea_list.length; i++) { %>
-              <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
-                <% if (new_tea_list[i].img.data) { %>
-                  <img class="card-img-top" src="data:image/<%= new_tea_list[i].img.contentType%>;base64,
-                  <%= new_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
-                <% } else { %>
-                  <img class="card-img-top" src="" alt="tea-image">
-                <% } %>
-                <div class="card-body">
-                  <li><h5><a style="text-decoration:none;color:black;" href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a></h5></li> 
-                  <li>Type: <%= new_tea_list[i].type %> </li> 
-                  <li>Brand: <%= new_tea_list[i].brand %> </li> 
-                  <li>Rating(out of 10): <%= new_tea_list[i].rating %> </li> 
-                  <li>Notes: <%= new_tea_list[i].notes %> </li> 
-                  <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= new_tea_list[i].created_by.url %>"> <%= new_tea_list[i].created_by.username %> </a></li>
-                </div>
+      <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+        <% for(let i = 0; i < new_tea_list.length; i++) { %>
+            <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+              <% if (new_tea_list[i].img.data) { %>
+                <img class="card-img-top" src="data:image/<%= new_tea_list[i].img.contentType%>;base64,
+                <%= new_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+              <% } else { %>
+                <img class="card-img-top" src="" alt="tea-image">
+              <% } %>
+              <div class="card-body">
+                <li><h5><a style="text-decoration:none;color:black;" href='<%= new_tea_list[i].url %>'> <%= new_tea_list[i].tea_name %> </a></h5></li> 
+                <li>Type: <%= new_tea_list[i].type %> </li> 
+                <li>Brand: <%= new_tea_list[i].brand %> </li> 
+                <li>Rating(out of 10): <%= new_tea_list[i].rating %> </li> 
+                <li>Notes: <%= new_tea_list[i].notes %> </li> 
+                <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= new_tea_list[i].created_by.url %>"> <%= new_tea_list[i].created_by.username %> </a></li>
               </div>
-          <% } %>
-        </ul>
+            </div>
+        <% } %>
+      </ul>
+    </div>
+    <div class="container-fluid">
+      <h2 class="text-center mb-3">Green Teas</h2>
+      <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+        <% for(let i = 0; i < green_tea_list.length; i++) { %>
+            <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+              <% if (green_tea_list[i].img.data) { %>
+                <img class="card-img-top" src="data:image/<%= green_tea_list[i].img.contentType%>;base64,
+                <%= green_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+              <% } else { %>
+                <img class="card-img-top" src="" alt="tea-image">
+              <% } %>
+              <div class="card-body">
+                <li><h5><a style="text-decoration:none;color:black;" href='<%= green_tea_list[i].url %>'> <%= green_tea_list[i].tea_name %> </a></h5></li> 
+                <li>Type: <%= green_tea_list[i].type %> </li> 
+                <li>Brand: <%= green_tea_list[i].brand %> </li> 
+                <li>Rating(out of 10): <%= green_tea_list[i].rating %> </li> 
+                <li>Notes: <%= green_tea_list[i].notes %> </li> 
+                <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= green_tea_list[i].created_by.url %>"> <%= green_tea_list[i].created_by.username %> </a></li>
+              </div>
+            </div>
+        <% } %>
+      </ul>
+      <div class="row">
+        <div class="col text-center">
+          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+        </div>
       </div>
     </div>
-    <div class="greenteas">
-      <h3>Green Teas</h3>
-      <ul>
-        <% for(let i = 0; i < green_tea_list.length; i ++) { %>
-          <div class="teacard"> 
-            <li> <a href='<%= green_tea_list[i].url %>'> <%= green_tea_list[i].tea_name %> </a> </a> 
-            <li>Brand: <%= green_tea_list[i].brand %>  </li> 
-            <li>Rating(out of 10): <%= green_tea_list[i].rating %> </li> 
-          </div>
-        <% } %>
-      </ul>
-    </div>
-    <div class="blackteas">
-      <h3>Black Teas</h3>
-      <ul>
-        <% for(let i = 0; i < black_tea_list.length; i ++) { %>
-          <div class="teacard"> 
-            <li> <a href='<%= black_tea_list[i].url %>'> <%= black_tea_list[i].tea_name %> </a> </a> 
-            <li>Brand: <%= black_tea_list[i].brand %>  </li> 
-            <li>Rating(out of 10): <%= black_tea_list[i].rating %> </li> 
-          </div>
-        <% } %>
-      </ul>
-    </div>
-    <div class="oolongteas">
-      <h3>Oolong Teas</h3>
-      <ul>
-        <% for(let i = 0; i < oolong_tea_list.length; i ++) { %>
-          <div class="teacard"> 
-            <li> <a href='<%= oolong_tea_list[i].url %>'> <%= oolong_tea_list[i].tea_name %> </a> </a> 
-            <li>Brand: <%= oolong_tea_list[i].brand %>  </li> 
-            <li>Rating(out of 10): <%= oolong_tea_list[i].rating %> </li>  
-          </div>
-        <% } %>
-      </ul>
-    </div>
-    <div class="herbalteas">
-      <h3>Herbal Teas</h3>
-      <ul>
-        <% for(let i = 0; i < herbal_tea_list.length; i ++) { %>
-          <div class="teacard"> 
-            <li> <a href='<%= herbal_tea_list[i].url %>'> <%= herbal_tea_list[i].tea_name %> </a> </a> 
-            <li>Brand: <%= herbal_tea_list[i].brand %>  </li> 
-            <li>Rating(out of 10): <%= herbal_tea_list[i].rating %> </li> 
-          </div>
-        <% } %>
-      </ul>
-    </div>
-    <div class="whiteteas">
-      <h3>White Teas</h3>
-      <% for(let i = 0; i < white_tea_list.length; i ++) { %>
-        <div class="teacard"> 
-          <li> <a href='<%= white_tea_list[i].url %>'> <%= white_tea_list[i].tea_name %> </a> </a> 
-          <li>Brand: <%= white_tea_list[i].brand %>  </li> 
-          <li>Rating(out of 10): <%= white_tea_list[i].rating %> </li> 
-        </div>
-      <% } %>
-    </div>
-    <div class="tealist">
-      <h2> All Teas</h2>
-        <ul>
-            <% for(let i = 0; i < tea_list.length; i ++) { %>
-              <div class="teacard"> 
-                <li> <a href='<%= tea_list[i].url %>'> <%= tea_list[i].tea_name %> </a> </a> 
-                <li>Type: <%= tea_list[i].type %> </li> 
-                <li>Brand: <%= tea_list[i].brand %>  </li> 
-                <li>Rating(out of 10): <%= tea_list[i].rating %> </li> 
-                <li>Notes: <%= tea_list[i].notes %> </li> 
+    <div class="container-fluid">
+      <h2 class="text-center mb-3">Black Teas</h2>
+      <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+        <% for(let i = 0; i < black_tea_list.length; i++) { %>
+            <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+              <% if (black_tea_list[i].img.data) { %>
+                <img class="card-img-top" src="data:image/<%= black_tea_list[i].img.contentType%>;base64,
+                <%= black_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+              <% } else { %>
+                <img class="card-img-top" src="" alt="tea-image">
+              <% } %>
+              <div class="card-body">
+                <li><h5><a style="text-decoration:none;color:black;" href='<%= black_tea_list[i].url %>'> <%= black_tea_list[i].tea_name %> </a></h5></li> 
+                <li>Type: <%= black_tea_list[i].type %> </li> 
+                <li>Brand: <%= black_tea_list[i].brand %> </li> 
+                <li>Rating(out of 10): <%= black_tea_list[i].rating %> </li> 
+                <li>Notes: <%= black_tea_list[i].notes %> </li> 
+                <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= black_tea_list[i].created_by.url %>"> <%= black_tea_list[i].created_by.username %> </a></li>
               </div>
-            <% } %>
-        </ul>
+            </div>
+        <% } %>
+      </ul>
+      <div class="row">
+        <div class="col text-center">
+          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <h2 class="text-center mb-3">Oolong Teas</h2>
+      <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+        <% for(let i = 0; i < oolong_tea_list.length; i++) { %>
+            <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+              <% if (oolong_tea_list[i].img.data) { %>
+                <img class="card-img-top" src="data:image/<%= oolong_tea_list[i].img.contentType%>;base64,
+                <%= oolong_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+              <% } else { %>
+                <img class="card-img-top" src="" alt="tea-image">
+              <% } %>
+              <div class="card-body">
+                <li><h5><a style="text-decoration:none;color:black;" href='<%= oolong_tea_list[i].url %>'> <%= oolong_tea_list[i].tea_name %> </a></h5></li> 
+                <li>Type: <%= oolong_tea_list[i].type %> </li> 
+                <li>Brand: <%= oolong_tea_list[i].brand %> </li> 
+                <li>Rating(out of 10): <%= oolong_tea_list[i].rating %> </li> 
+                <li>Notes: <%= oolong_tea_list[i].notes %> </li> 
+                <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= oolong_tea_list[i].created_by.url %>"> <%= oolong_tea_list[i].created_by.username %> </a></li>
+              </div>
+            </div>
+        <% } %>
+      </ul>
+      <div class="row">
+        <div class="col text-center">
+          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <h2 class="text-center mb-3">Herbal Teas</h2>
+      <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+        <% for(let i = 0; i < herbal_tea_list.length; i++) { %>
+            <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+              <% if (herbal_tea_list[i].img.data) { %>
+                <img class="card-img-top" src="data:image/<%= herbal_tea_list[i].img.contentType%>;base64,
+                <%= herbal_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+              <% } else { %>
+                <img class="card-img-top" src="" alt="tea-image">
+              <% } %>
+              <div class="card-body">
+                <li><h5><a style="text-decoration:none;color:black;" href='<%= herbal_tea_list[i].url %>'> <%= herbal_tea_list[i].tea_name %> </a></h5></li> 
+                <li>Type: <%= herbal_tea_list[i].type %> </li> 
+                <li>Brand: <%= herbal_tea_list[i].brand %> </li> 
+                <li>Rating(out of 10): <%= herbal_tea_list[i].rating %> </li> 
+                <li>Notes: <%= herbal_tea_list[i].notes %> </li> 
+                <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= herbal_tea_list[i].created_by.url %>"> <%= herbal_tea_list[i].created_by.username %> </a></li>
+              </div>
+            </div>
+        <% } %>
+      </ul>
+      <div class="row">
+        <div class="col text-center">
+          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <h2 class="text-center mb-3">White Teas</h2>
+      <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
+        <% for(let i = 0; i < white_tea_list.length; i++) { %>
+            <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+              <% if (white_tea_list[i].img.data) { %>
+                <img class="card-img-top" src="data:image/<%= white_tea_list[i].img.contentType%>;base64,
+                <%= white_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+              <% } else { %>
+                <img class="card-img-top" src="" alt="tea-image">
+              <% } %>
+              <div class="card-body">
+                <li><h5><a style="text-decoration:none;color:black;" href='<%= white_tea_list[i].url %>'> <%= white_tea_list[i].tea_name %> </a></h5></li> 
+                <li>Type: <%= white_tea_list[i].type %> </li> 
+                <li>Brand: <%= white_tea_list[i].brand %> </li> 
+                <li>Rating(out of 10): <%= white_tea_list[i].rating %> </li> 
+                <li>Notes: <%= white_tea_list[i].notes %> </li> 
+                <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= white_tea_list[i].created_by.url %>"> <%= white_tea_list[i].created_by.username %> </a></li>
+              </div>
+            </div>
+        <% } %>
+      </ul>
+      <div class="row">
+        <div class="col text-center">
+          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+        </div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </body>
