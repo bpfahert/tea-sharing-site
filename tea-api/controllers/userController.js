@@ -1,6 +1,12 @@
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
 const User = require("../models/user");
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
+
+const upload = multer({dest: './public/images/'});
+const mongoose = require('mongoose');
 
 exports.user_list = (req, res) => {
   User.find({}, "username")
@@ -39,12 +45,19 @@ exports.user_create_get = (req, res, next) => {
   };
 
 exports.user_create_post = [
+  upload.single('userimg'),
   body("username", "Please enter a username").trim().isLength({min: 2}).escape(),
   body("password").trim().isLength({min: 2}).escape(),
   body("favoritetea"),
   body("email"),
   body("about"),
   (req, res, next) => {
+    const uploadedImage = {
+      userImage: req.file ? {
+        data: fs.readFileSync(path.join(__dirname + "/../public/images/" + req.file.filename)),
+      contentType: "image/png"
+      } : ""
+    }
     const errors = validationResult(req);
 
     const user = new User({
@@ -53,6 +66,7 @@ exports.user_create_post = [
       email: req.body.email,
       favorite_tea_type: req.body.favoritetea,
       about: req.body.about,
+      img: uploadedImage.userImage,
     });
 
     bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {

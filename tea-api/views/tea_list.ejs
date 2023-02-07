@@ -21,7 +21,7 @@
               </div>
               <div class="modal-body">
                 <div>
-                  <form method="POST" action="/user/create" class="userform" id="newuserform">
+                  <form method="POST" action="/user/create" class="userform" id="newuserform" enctype="multipart/form-data">
                     <div class="row">
                       <div class="form-group col-lg-12 mb-3">
                         <div class="form-floating">
@@ -50,7 +50,6 @@
                       <div class="form-group col-lg-12 mb-3">
                         <div class="form-floating">
                           <select class="form-select" aria-label="favorite tea type" id="favoritetea" name="favoritetea">
-                            <option selected>Choose your favorite type of tea</option>
                             <option value="Green">Green</option>
                             <option value="Black">Black</option>
                             <option value="Oolong">Oolong</option>
@@ -66,6 +65,14 @@
                         <div class="form-floating">
                           <textarea class="form-control" style="height:220px" id="about" placeholder="Write a bit about yourself here!" name="about" maxlength="400" ></textarea>
                           <label for="about" class="form-label">About me</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="file" class="form-control" id="userimg" name="userimg"></input>
+                          <label for="userimg" class="form-label">Upload Avatar Picture</label>
                         </div>
                       </div>
                     </div>

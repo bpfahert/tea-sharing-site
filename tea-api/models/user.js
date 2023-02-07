@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const tea = require('./tea');
 
 const UserSchema = new Schema({
     username: {type: String, required: true, minLength: 3, maxLength: 15},
@@ -16,6 +17,7 @@ const UserSchema = new Schema({
     }],
     email: {type: String},
     saved_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
+    img: {data: Buffer, contentType: String},
 });
 
 UserSchema.virtual("url").get(function () {

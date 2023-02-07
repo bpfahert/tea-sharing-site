@@ -59,6 +59,12 @@
     </nav>
     <h1><%= title %></h1>
     <div class="userinfodiv">
+      <% if (user.img.data) { %>
+        <img src="data:image/<%= user.img.contentType%>;base64,
+        <%= user.img.data.toString('base64') %>">
+      <% } else {%>
+        <p>This user does not have an avatar</p>
+      <% } %>
         <p>Username: <%= user.username %></p>
         <p>Favorite Tea: <%= user.favorite_tea_type %></p>
         <% if(user.favorite_teas[0]) { %>
