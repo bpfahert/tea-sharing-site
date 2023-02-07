@@ -6,15 +6,161 @@
   </head>
   <body style="background-color: honeydew">
     <nav class="navbar navbar-expand-sm navbar-light" style="background-color:turquoise">
-      <div class="collapse navbar-collapse" id="navbarsupportedcontent">
+      <div class="collapse navbar-collapse" style="justify-content:space-between" id="navbarsupportedcontent">
         <ul class="navbar-nav">
       <% if (currentUser) { %>
           <li class="nav-item active"><a class="nav-link" href="/teas"><%= currentUser.username %></a></li>
       <% } else { %>
-        <li class="nav-item"><a class="nav-link" href="/user/create">Sign up</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signupmodal">Sign Up</a></li>
+        <div class="modal fade" id="signupmodal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header text-centered">
+                <h3>Sign up for an account!</h3>
+                <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#signupmodal"></button>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <form method="POST" action="/user/create" class="userform" id="newuserform">
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="required" maxlength="15"></input>
+                          <label for="username" class="form-label">Username</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required" minlength="3" maxlength="100"></input>
+                          <label for="password" class="form-label">Password</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="email" class="form-control" placeholder="Email@email.com" id="email" name="email"></input>
+                          <label for="email" class="form-label">Email</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <select class="form-select" aria-label="favorite tea type" id="favoritetea" name="favoritetea">
+                            <option selected>Choose your favorite type of tea</option>
+                            <option value="Green">Green</option>
+                            <option value="Black">Black</option>
+                            <option value="Oolong">Oolong</option>
+                            <option value="Herbal">Herbal</option>
+                            <option value="White">White</option>
+                          </select>
+                          <label for="favoritetea">Favorite type of tea</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <textarea class="form-control" style="height:220px" id="about" placeholder="Write a bit about yourself here!" name="about" maxlength="400" ></textarea>
+                          <label for="about" class="form-label">About me</label>
+                        </div>
+                      </div>
+                    </div>
+                      <button class="btn btn-info" type="submit">Submit</button>
+                    </form>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
       <% } %>
       <li class="nav-item"><a class="nav-link" href="/teas/tealist">Teas</a></li>
-      <li class="nav-item"><a class="nav-link" href="/teas/create">Add New Tea</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newteamodal">Add New Tea</a></li>
+      <div class="modal fade" id="newteamodal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header text-centered">
+              <h3>Add a new tea!</h3>
+              <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#newteamodal"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <form method="POST" action="/teas/create" className="teaform" id="newteaform" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <input type="text" id="teaname" class="form-control" name="teaname" placeholder="Tea" required="required" max-length="50"></input>
+                        <label for="teaname" class="form-label">Tea Name</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <input type="text" id="brand" class="form-control" name="brand" placeholder="Brand" max-length="30"></input>
+                        <label for="brand" class="form-label">Brand</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6 mb-3">
+                      <div class="form-floating">
+                        <select class="form-select" id="type" aria-label="new tea type" name="type">
+                          <option value="Green">Green</option>
+                          <option value="Black">Black</option>
+                          <option value="Oolong">Oolong</option>
+                          <option value="Herbal">Herbal</option>
+                          <option value="White">White</option>
+                          <option value="Unknown">Unknown</option>
+                        </select>
+                        <label for="type" class="form-label">Type of Tea</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                      <div class="form-floating">
+                        <select class="form-select" id="rating" name="rating" aria-label="new tea rating">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                        <label for="rating" class="form-label">Rating</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <textarea class="form-control" style="height:220px" id="notes" placeholder="Notes about this tea" name="notes" maxlength="400" ></textarea>
+                        <label for="notes" class="form-label">Notes on Tea</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <input type="file" class="form-control" id="teaimg" name="teaimg"></input>
+                        <label for="teaimg" class="form-label">Upload Picture</label>
+                      </div>
+                    </div>
+                  </div>
+                    <button class="btn btn-info" type="submit">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <% if (currentUser) { %>
         <li class="nav-item"><a class="nav-link" href="<%= currentUser.url %>">Profile</a></li>
       <% } else { %>
@@ -32,7 +178,7 @@
                       <div class="row">
                         <div class="form-group col-lg-12 mb-3">
                           <div class="form-floating">
-                            <input type="text" id="username" class="form-control" name="username" required="required"></input>
+                            <input type="text" id="username" class="form-control" name="username" placeholder="Username" required="required"></input>
                             <label for="username" class="form-label">Username</label>
                           </div>
                         </div>
@@ -40,7 +186,7 @@
                       <div class="row">
                         <div class="form-group col-lg-12 mb-3">
                           <div class="form-floating">
-                            <input type="password" id="password" name="password" required="required" class="form-control"></input>
+                            <input type="password" id="password" name="password" required="required" placeholder="Password" class="form-control"></input>
                             <label for="password" class="form-label">Password</label>
                           </div>
                         </div>
@@ -55,6 +201,7 @@
       <% } %>
       <li class="nav-item"><a class="nav-link" href="/user/userlist">Friends</a></li>
         </ul>
+        <button class="btn btn-info" style="justify-self:end;">Alert</button>
       </div>
     </nav>
     <% if (currentUser) { %>
@@ -87,7 +234,7 @@
     <div class="container-fluid">
       <h2 class="text-center mb-3">Green Teas</h2>
       <ul style="display:flex;justify-content:center;list-style: none;gap: 5px;">
-        <% for(let i = 0; i < green_tea_list.length; i++) { %>
+        <% for(let i = 0; i < 5; i++) { %>
             <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
               <% if (green_tea_list[i].img.data) { %>
                 <img class="card-img-top" src="data:image/<%= green_tea_list[i].img.contentType%>;base64,
@@ -106,9 +253,31 @@
             </div>
         <% } %>
       </ul>
+      <div class="collapse" id="expandedgreentealist">
+        <ul style="display:flex;justify-content:center;flex-wrap:wrap;list-style: none;gap: 5px;">
+          <% for(let i = 5; i < green_tea_list.length; i++) { %>
+          <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+            <% if (green_tea_list[i].img.data) { %>
+              <img class="card-img-top" src="data:image/<%= green_tea_list[i].img.contentType%>;base64,
+              <%= green_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+            <% } else { %>
+              <img class="card-img-top" src="" alt="tea-image">
+            <% } %>
+            <div class="card-body">
+              <li><h5><a style="text-decoration:none;color:black;" href='<%= green_tea_list[i].url %>'> <%= green_tea_list[i].tea_name %> </a></h5></li> 
+              <li>Type: <%= green_tea_list[i].type %> </li> 
+              <li>Brand: <%= green_tea_list[i].brand %> </li> 
+              <li>Rating(out of 10): <%= green_tea_list[i].rating %> </li> 
+              <li>Notes: <%= green_tea_list[i].notes %> </li> 
+              <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= green_tea_list[i].created_by.url %>"> <%= green_tea_list[i].created_by.username %> </a></li>
+            </div>
+          </div>
+          <% } %>
+        </ul>
+      </div>
       <div class="row">
         <div class="col text-center">
-          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+          <button class="btn btn-dark center mb-3" data-bs-toggle="collapse" data-bs-target="#expandedgreentealist" aria-expanded="false" aria-controls="fullgreentealist" >Expand</button>
         </div>
       </div>
     </div>
@@ -134,9 +303,31 @@
             </div>
         <% } %>
       </ul>
+      <div class="collapse" id="expandedblacktealist">
+        <ul style="display:flex;justify-content:center;flex-wrap:wrap;list-style: none;gap: 5px;">
+          <% for(let i = 5; i < black_tea_list.length; i++) { %>
+          <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+            <% if (black_tea_list[i].img.data) { %>
+              <img class="card-img-top" src="data:image/<%= black_tea_list[i].img.contentType%>;base64,
+              <%= black_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+            <% } else { %>
+              <img class="card-img-top" src="" alt="tea-image">
+            <% } %>
+            <div class="card-body">
+              <li><h5><a style="text-decoration:none;color:black;" href='<%= black_tea_list[i].url %>'> <%= black_tea_list[i].tea_name %> </a></h5></li> 
+              <li>Type: <%= black_tea_list[i].type %> </li> 
+              <li>Brand: <%= black_tea_list[i].brand %> </li> 
+              <li>Rating(out of 10): <%= black_tea_list[i].rating %> </li> 
+              <li>Notes: <%= black_tea_list[i].notes %> </li> 
+              <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= black_tea_list[i].created_by.url %>"> <%= black_tea_list[i].created_by.username %> </a></li>
+            </div>
+          </div>
+          <% } %>
+        </ul>
+      </div>
       <div class="row">
         <div class="col text-center">
-          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+          <button class="btn btn-dark center mb-3" data-bs-toggle="collapse" data-bs-target="#expandedblacktealist" aria-expanded="false" aria-controls="expandedblacktealist" >Expand</button>
         </div>
       </div>
     </div>
@@ -162,9 +353,31 @@
             </div>
         <% } %>
       </ul>
+      <div class="collapse" id="expandedoolongtealist">
+        <ul style="display:flex;justify-content:center;flex-wrap:wrap;list-style: none;gap: 5px;">
+          <% for(let i = 5; i < oolong_tea_list.length; i++) { %>
+          <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+            <% if (oolong_tea_list[i].img.data) { %>
+              <img class="card-img-top" src="data:image/<%= oolong_tea_list[i].img.contentType%>;base64,
+              <%= oolong_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+            <% } else { %>
+              <img class="card-img-top" src="" alt="tea-image">
+            <% } %>
+            <div class="card-body">
+              <li><h5><a style="text-decoration:none;color:black;" href='<%= oolong_tea_list[i].url %>'> <%= oolong_tea_list[i].tea_name %> </a></h5></li> 
+              <li>Type: <%= oolong_tea_list[i].type %> </li> 
+              <li>Brand: <%= oolong_tea_list[i].brand %> </li> 
+              <li>Rating(out of 10): <%= oolong_tea_list[i].rating %> </li> 
+              <li>Notes: <%= oolong_tea_list[i].notes %> </li> 
+              <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= oolong_tea_list[i].created_by.url %>"> <%= oolong_tea_list[i].created_by.username %> </a></li>
+            </div>
+          </div>
+          <% } %>
+        </ul>
+      </div>
       <div class="row">
         <div class="col text-center">
-          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+          <button class="btn btn-dark center mb-3" data-bs-toggle="collapse" data-bs-target="#expandedoolongtealist" aria-expanded="false" aria-controls="expandedoolongtealist" >Expand</button>
         </div>
       </div>
     </div>
@@ -190,9 +403,31 @@
             </div>
         <% } %>
       </ul>
+      <div class="collapse" id="expandedherbaltealist">
+        <ul style="display:flex;justify-content:center;flex-wrap:wrap;list-style: none;gap: 5px;">
+          <% for(let i = 5; i < herbal_tea_list.length; i++) { %>
+          <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+            <% if (herbal_tea_list[i].img.data) { %>
+              <img class="card-img-top" src="data:image/<%= herbal_tea_list[i].img.contentType%>;base64,
+              <%= herbal_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+            <% } else { %>
+              <img class="card-img-top" src="" alt="tea-image">
+            <% } %>
+            <div class="card-body">
+              <li><h5><a style="text-decoration:none;color:black;" href='<%= herbal_tea_list[i].url %>'> <%= herbal_tea_list[i].tea_name %> </a></h5></li> 
+              <li>Type: <%= herbal_tea_list[i].type %> </li> 
+              <li>Brand: <%= herbal_tea_list[i].brand %> </li> 
+              <li>Rating(out of 10): <%= herbal_tea_list[i].rating %> </li> 
+              <li>Notes: <%= herbal_tea_list[i].notes %> </li> 
+              <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= herbal_tea_list[i].created_by.url %>"> <%= herbal_tea_list[i].created_by.username %> </a></li>
+            </div>
+          </div>
+          <% } %>
+        </ul>
+      </div>
       <div class="row">
         <div class="col text-center">
-          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+          <button class="btn btn-dark center mb-3" data-bs-toggle="collapse" data-bs-target="#expandedherbaltealist" aria-expanded="false" aria-controls="expandedherbaltealist" >Expand</button>
         </div>
       </div>
     </div>
@@ -218,9 +453,31 @@
             </div>
         <% } %>
       </ul>
+      <div class="collapse" id="expandedwhitetealist">
+        <ul style="display:flex;justify-content:center;flex-wrap:wrap;list-style: none;gap: 5px;">
+          <% for(let i = 5; i < white_tea_list.length; i++) { %>
+          <div class="card mr-2 border border-dark rounded" style="background-color:peachpuff;width: 18rem;">
+            <% if (white_tea_list[i].img.data) { %>
+              <img class="card-img-top" src="data:image/<%= white_tea_list[i].img.contentType%>;base64,
+              <%= white_tea_list[i].img.data.toString('base64') %>" alt="tea-image">
+            <% } else { %>
+              <img class="card-img-top" src="" alt="tea-image">
+            <% } %>
+            <div class="card-body">
+              <li><h5><a style="text-decoration:none;color:black;" href='<%= white_tea_list[i].url %>'> <%= white_tea_list[i].tea_name %> </a></h5></li> 
+              <li>Type: <%= white_tea_list[i].type %> </li> 
+              <li>Brand: <%= white_tea_list[i].brand %> </li> 
+              <li>Rating(out of 10): <%= white_tea_list[i].rating %> </li> 
+              <li>Notes: <%= white_tea_list[i].notes %> </li> 
+              <li>Added by: <a style="text-decoration: none;color: rgb(104, 13, 1);font-weight:bolder;" href="<%= white_tea_list[i].created_by.url %>"> <%= white_tea_list[i].created_by.username %> </a></li>
+            </div>
+          </div>
+          <% } %>
+        </ul>
+      </div>
       <div class="row">
         <div class="col text-center">
-          <button type="button" class="btn btn-dark center mb-3">Expand</button>
+          <button class="btn btn-dark center mb-3" data-bs-toggle="collapse" data-bs-target="#expandedwhitetealist" aria-expanded="false" aria-controls="expandedwhitetealist" >Expand</button>
         </div>
       </div>
     </div>

@@ -42,6 +42,7 @@ exports.user_create_post = [
   body("username", "Please enter a username").trim().isLength({min: 2}).escape(),
   body("password").trim().isLength({min: 2}).escape(),
   body("favoritetea"),
+  body("email"),
   body("about"),
   (req, res, next) => {
     const errors = validationResult(req);

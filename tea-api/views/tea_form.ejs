@@ -63,12 +63,24 @@
         <a href="/logout">Log out</a>
         <p></p>
         <div class="formdiv border border-dark">
-            <form method="POST" action="" className="teaform" id="newteaform" enctype="multipart/form-data">
+            <form method="POST" action="/teas/create" className="teaform" id="newteaform" enctype="multipart/form-data">
               <div class="row">
-                <div class="form-group col-md-2 form-floating mb-2">
-                  <input type="text" id="teaname" name="teaname" placeholder="Tea name" required="required" maxlength="50" class="form-control"></input>
-                  <label for="teaname" class="form-label">Tea Name</label>
+                <div class="form-group col-lg-12 mb-3">
+                  <div class="form-floating">
+                    <input type="text" id="teaname" class="form-control" name="teaname" placeholder="Tea" required="required" max-length="50"></input>
+                    <label for="teaname" class="form-label">Username</label>
+                  </div>
                 </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-12 mb-3">
+                  <div class="form-floating">
+                    <input type="text" id="teaname" class="form-control" name="teaname" placeholder="Tea" required="required" max-length="50"></input>
+                    <label for="teaname" class="form-label">Username</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="form-group col-md-2 form-floating mb-2">
                   <input type="text" class="form-control" id="brand" name="brand" maxlength="30" placeholder="Brand"></input>
                   <label for="brand" class="form-label">Tea Brand</label>

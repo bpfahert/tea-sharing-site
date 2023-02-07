@@ -67,7 +67,7 @@ exports.tea_list = (req, res, next) => {
       },
 
       green_teas(callback) {
-        Tea.find({ type: "Green"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).limit(5).exec(callback);
+        Tea.find({ type: "Green"}, "created_on created_by tea_name type brand rating notes").populate("created_by").sort({created_on: -1}).exec(callback);
       },
 
       black_teas(callback) {

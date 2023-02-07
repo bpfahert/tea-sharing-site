@@ -12,7 +12,6 @@ const User = require('./models/user');
 const bcrypt = require('bcryptjs');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var testAPIRouter = require('./routes/testAPI');
 const teasRouter = require('./routes/teas')
 const userRouter = require('./routes/user');

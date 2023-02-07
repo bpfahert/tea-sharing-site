@@ -79,9 +79,8 @@
     <p></p>
     <a href="<%= tea.url %>/favorite">Add this tea to your favorites</a>
     <p></p>
-    <a href="/teas/<%= tea_id %>/recommend">Recommend this tea to a user</a>
     <% if (currentUser) { %>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#teamodal">Tea rec</a>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#teamodal">Recommend this tea to a user</a>
     <div class="modal fade" id="teamodal">
       <div class="modal-dialog">
         <div class="modal-content">
