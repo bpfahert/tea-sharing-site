@@ -10,6 +10,7 @@ var logger = require('morgan');
 var cors = require('cors');
 const User = require('./models/user');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var testAPIRouter = require('./routes/testAPI');
@@ -18,7 +19,7 @@ const userRouter = require('./routes/user');
 
 const app = express();
 const mongoose = require('mongoose');
-const mongoDB = "mongodb+srv://admin:vPHzWtj3LP1CK2u6@tea-cluster.t1mwtol.mongodb.net/tea_db?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGOURL;
 
 mongoose.connect(mongoDB, { useNewURLParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -73,7 +74,7 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-app.use(session({secret: "dogs", resave: false, saveUninitialized: true}));
+app.use(session({secret: process.env.SECRET_KEY, resave: false, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());

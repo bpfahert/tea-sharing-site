@@ -6,15 +6,168 @@
   </head>
   <body style="background-color:peachpuff">
     <nav class="navbar navbar-expand-sm navbar-light" style="background-color:turquoise">
-      <div class="collapse navbar-collapse" id="navbarsupportedcontent">
+      <div class="collapse navbar-collapse" style="justify-content:space-between" id="navbarsupportedcontent">
         <ul class="navbar-nav">
       <% if (currentUser) { %>
           <li class="nav-item active"><a class="nav-link" href="/teas"><%= currentUser.username %></a></li>
       <% } else { %>
-        <li class="nav-item"><a class="nav-link" href="/user/create">Sign up</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signupmodal">Sign Up</a></li>
+        <div class="modal fade" id="signupmodal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header text-centered">
+                <h3>Sign up for an account!</h3>
+                <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#signupmodal"></button>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <form method="POST" action="/user/create" class="userform" id="newuserform" enctype="multipart/form-data">
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="required" maxlength="15"></input>
+                          <label for="username" class="form-label">Username</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required" minlength="3" maxlength="100"></input>
+                          <label for="password" class="form-label">Password</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="email" class="form-control" placeholder="Email@email.com" id="email" name="email"></input>
+                          <label for="email" class="form-label">Email</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <select class="form-select" aria-label="favorite tea type" id="favoritetea" name="favoritetea">
+                            <option value="Green">Green</option>
+                            <option value="Black">Black</option>
+                            <option value="Oolong">Oolong</option>
+                            <option value="Herbal">Herbal</option>
+                            <option value="White">White</option>
+                          </select>
+                          <label for="favoritetea">Favorite type of tea</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <textarea class="form-control" style="height:220px" id="about" placeholder="Write a bit about yourself here!" name="about" maxlength="400" ></textarea>
+                          <label for="about" class="form-label">About me</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12 mb-3">
+                        <div class="form-floating">
+                          <input type="file" class="form-control" id="userimg" name="userimg"></input>
+                          <label for="userimg" class="form-label">Upload Avatar Picture</label>
+                        </div>
+                      </div>
+                    </div>
+                      <button class="btn btn-info" type="submit">Submit</button>
+                    </form>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
       <% } %>
       <li class="nav-item"><a class="nav-link" href="/teas/tealist">Teas</a></li>
-      <li class="nav-item"><a class="nav-link" href="/teas/create">Add New Tea</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newteamodal">Add New Tea</a></li>
+      <div class="modal fade" id="newteamodal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header text-centered">
+              <h3>Add a new tea!</h3>
+              <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#newteamodal"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <form method="POST" action="/teas/create" className="teaform" id="newteaform" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <input type="text" id="teaname" class="form-control" name="teaname" placeholder="Tea" required="required" max-length="50"></input>
+                        <label for="teaname" class="form-label">Tea Name</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <input type="text" id="brand" class="form-control" name="brand" placeholder="Brand" max-length="30"></input>
+                        <label for="brand" class="form-label">Brand</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6 mb-3">
+                      <div class="form-floating">
+                        <select class="form-select" id="type" aria-label="new tea type" name="type">
+                          <option value="Green">Green</option>
+                          <option value="Black">Black</option>
+                          <option value="Oolong">Oolong</option>
+                          <option value="Herbal">Herbal</option>
+                          <option value="White">White</option>
+                          <option value="Unknown">Unknown</option>
+                        </select>
+                        <label for="type" class="form-label">Type of Tea</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                      <div class="form-floating">
+                        <select class="form-select" id="rating" name="rating" aria-label="new tea rating">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                        <label for="rating" class="form-label">Rating</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <textarea class="form-control" style="height:220px" id="notes" placeholder="Notes about this tea" name="notes" maxlength="400" ></textarea>
+                        <label for="notes" class="form-label">Notes on Tea</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg-12 mb-3">
+                      <div class="form-floating">
+                        <input type="file" class="form-control" id="teaimg" name="teaimg"></input>
+                        <label for="teaimg" class="form-label">Upload Picture</label>
+                      </div>
+                    </div>
+                  </div>
+                    <button class="btn btn-info" type="submit">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <% if (currentUser) { %>
         <li class="nav-item"><a class="nav-link" href="<%= currentUser.url %>">Profile</a></li>
       <% } else { %>
@@ -32,7 +185,7 @@
                       <div class="row">
                         <div class="form-group col-lg-12 mb-3">
                           <div class="form-floating">
-                            <input type="text" id="username" class="form-control" name="username" required="required"></input>
+                            <input type="text" id="username" class="form-control" name="username" placeholder="Username" required="required"></input>
                             <label for="username" class="form-label">Username</label>
                           </div>
                         </div>
@@ -40,7 +193,7 @@
                       <div class="row">
                         <div class="form-group col-lg-12 mb-3">
                           <div class="form-floating">
-                            <input type="password" id="password" name="password" required="required" class="form-control"></input>
+                            <input type="password" id="password" name="password" required="required" placeholder="Password" class="form-control"></input>
                             <label for="password" class="form-label">Password</label>
                           </div>
                         </div>
@@ -55,6 +208,7 @@
       <% } %>
       <li class="nav-item"><a class="nav-link" href="/user/userlist">Friends</a></li>
         </ul>
+        <button class="btn btn-info" style="justify-self:end;">Alert</button>
       </div>
     </nav>
     <% if (currentUser) { %>
