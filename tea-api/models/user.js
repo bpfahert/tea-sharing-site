@@ -17,6 +17,7 @@ const UserSchema = new Schema({
     }],
     email: {type: String},
     saved_teas: [{type: Schema.Types.ObjectId, ref: "Tea"}],
+    notifications: {type: Boolean},
     img: {data: Buffer, contentType: String},
 });
 

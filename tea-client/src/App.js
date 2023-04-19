@@ -1,11 +1,15 @@
 import React from "react";
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/Navbar';
 
 
-//add props to App?
-function App() {
+export default function App() {
   const [apiResponse, setApiResponse] = React.useState("");
+
+  let user = {
+    username: "denny",
+    url: "/denny",
+    img: {data: "a"},
+  }
   
 
   function callApi() {
@@ -22,10 +26,9 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar  />
       <p className="App-intro">{apiResponse}</p>
       <p>Hello!</p>
     </div>
   );
 }
-
-export default App;

@@ -285,6 +285,7 @@ exports.tea_recommend_post = [
       };
       console.log(tea_obj);
       friend.recommended_teas.push(tea_obj);
+      friend.notifications = true;
 
       friend.save((err) => {
         if(err) {
