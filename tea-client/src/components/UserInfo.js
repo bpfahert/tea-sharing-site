@@ -1,11 +1,12 @@
 import React from 'react';
 import Navbar from './Navbar';
+import TeaList from './TeaList';
 
 export default function UserInfo(props) {
     let user = {
         username: "denny",
         url: "/denny",
-        favorite_teas: [],
+        favorite_teas: [{name: "new tea", brand: "david's tea", type: "green", rating: 8, notes: "good tea", created_on: new Date()}],
       }
 
     return (
@@ -20,10 +21,11 @@ export default function UserInfo(props) {
                 <p>This user does not have an avatar</p>
                 {/* } */}
                 <p>Username: {user.username}</p>
-                <p>Favorite Tea: {user.favorite_tea_type}</p>
+                <p>Favorite Type of Tea: {user.favorite_tea_type}</p>
+                <p>Favorite Teas: </p>
+                <TeaList tealist={user.favorite_teas} />
             </div>
         </div>
-
     )
 
 }
