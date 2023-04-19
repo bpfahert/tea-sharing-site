@@ -8,7 +8,7 @@ export default function LoginForm (props) {
                 <div className="form-group col-lg-12 mb-3">
                     <div className="form-floating">
                         <input type="text" id="username" className="form-control" name="username" required="required"></input>
-                        <label for="username" className="form-label">Username</label>
+                        <label htmlFor="username" className="form-label">Username</label>
                     </div>
                 </div>
             </div>
@@ -16,7 +16,7 @@ export default function LoginForm (props) {
                 <div className="form-group col-lg-12 mb-3">
                     <div className="form-floating">
                         <input type="password" id="password" name="password" required="required" className="form-control"></input>
-                        <label for="password" className="form-label">Password</label>
+                        <label htmlFor="password" className="form-label">Password</label>
                     </div>
                 </div>
             </div>

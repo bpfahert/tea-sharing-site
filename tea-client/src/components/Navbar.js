@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginForm from './LoginForm';
+import TeaForm from './TeaForm';
 
 export default function Navbar(props) {
 
@@ -8,14 +9,29 @@ export default function Navbar(props) {
             <div className="collapse navbar-collapse" id="navbarsupportedcontent">
                 <ul className="navbar-nav">
                     {props.currentuser ? 
-                    <li class="nav-item active"><a class="nav-link" href="/teas">{props.currentuser.username}</a></li> :
+                    <li class="nav-item active"><a className="nav-link" href="/teas">{props.currentuser.username}</a></li> :
                     <li className="nav-item"><a className="nav-link" href="/user/create">Sign up</a></li>
                     }
                     <li className="nav-item"><a className="nav-link" href="/teas/tealist">Teas</a></li>
-                    <li className="nav-item"><a className="nav-link" href="/teas/create">Add New Tea</a></li>
+                    <li className="nav-item"><a className="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newteamodal">Add New Tea</a></li>
+                    <div className="modal fade" id="newteamodal">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header text-centered">
+                                    <h3>Add a new tea!</h3>
+                                    <button className="btn-close" data-bs-dismiss="modal" data-bs-target="#newteamodal"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <div>
+                                        <TeaForm />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {props.currentuser ? 
                     <li className="nav-item"><a className="nav-link" href="<%= currentuser.url %>">Profile</a></li>:
-                    <li>
+                    <div>
                         <li className="nav-item"><a className="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginmodal">Log in</a></li>
                         <div className="modal fade" id="loginmodal">
                             <div className="modal-dialog">
@@ -32,9 +48,9 @@ export default function Navbar(props) {
                                 </div>
                             </div>                        
                         </div>
-                    </li>
+                    </div>
                     }
-                    <li class="nav-item"><a class="nav-link" href="/user/userlist">Friends</a></li>
+                    <li className="nav-item"><a className="nav-link" href="/user/userlist">Friends</a></li>
                 </ul>
             </div>
       </nav>

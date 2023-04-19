@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from './components/Navbar';
 
 
-export default function App() {
+export default function App(props) {
   const [apiResponse, setApiResponse] = React.useState("");
 
   let user = {
